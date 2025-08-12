@@ -1,0 +1,181 @@
+programa
+{
+	inclua biblioteca Util --> u
+	inclua biblioteca Texto	--> t
+	//inventário do jogador
+	logico temArmadura = falso	//armadura reduz dano em 5
+	logico temBastao = falso		//bastao +5 de dano
+	logico temChakram = falso	//ataque especial 30 de dano
+	logico chakramUsado = falso
+	logico pergaminho = falso
+
+	//quantidade de vida para a batalha
+	inteiro vidaJogador = 100
+	inteiro vidaAmmit = 120
+	logico ajudadoPorKhonshu = falso
+	logico ajudaLayla = falso
+    
+	funcao inicio()
+	{
+		introducao_historia()
+		jogo_escolhas()
+	}
+
+	//contexto do jogo
+    funcao introducao_historia()
+    {
+        escreva("======================================================\n")
+        escreva("            LUA E SOMBRAS - CAVALEIRO DA LUA         \n")
+        escreva("======================================================\n\n")
+
+        escreverLento("Você é Marc Spector, um homem atormentado por múltiplas personalidades – Steven, Jake e ele mesmo.\n")
+        escreverLento("Morto em combate, foi trazido de volta à vida como o avatar do deus egípcio Khonshu, tornando-se o Cavaleiro da Lua.\n\n")
+
+        escreverLento("Agora, Khonshu o envia em uma missão urgente:\n")
+        escreverLento("Impedir que a deusa Ammit, devoradora de almas, desperte e julgue toda a humanidade antes mesmo que as pessoas cometam seus crimes.\n\n")
+
+        escreverLento("Durante a sua jornada você:\n")
+        escreverLento("* Enfrentará visões.\n")
+        escreverLento("* Tomará decisões difíceis.\n")
+        escreverLento("* Irá escolher qual personalidade liderará o caminho.\n")
+        escreverLento("* Visitará lugares místicos para obter itens sagrados: a Armadura Lunar, o Bastão Lunar e o poderoso Chakram Lunar.\n")
+    }
+
+    funcao jogo_escolhas()
+    {
+		cadeia escolher
+		escreverLento("\n\nKhonshu surge no reflexo rachado do espelho, seu rosto esquelético se projetando para fora da superfície como se fosse romper o vidro. Sua voz ecoa dentro da sua mente, grave e inevitável: Marc... o julgamento começou\n")
+    	escreverLento("(A)ceitar seguir o chamado e entregar-se à missão. ")
+    	escreverLento("Ou (R)esistir, tentando manter o controle da sua vida.?")
+    	leia(escolher)
+
+    	se(escolher == "A" ou (escolher == "a"))
+    	{	
+    		ajudadoPorKhonshu = verdadeiro
+    		escreverLento("\nKhonshu inclina a cabeça e dá um sorriso macabro.\n")
+    	}
+    	senao
+    	{
+			escreverLento("\nVocê recusa, mas sente um peso esmagador na mente...\n")
+			escreverLento("Khonshu toma o controle à força. A dor é insuportável!\n")
+			vidaJogador = vidaJogador - 10
+    	}
+
+		escolha_personalidade()
+
+		escreverLento("\nNo horizonte, duas figuras se aproximam. Uma é imensa, sorridente e com cabeça de hipopótamo. A outra, uma mulher de olhar afiado e postura de guerreira.\n")
+		escreverLento("[T] Taweret — a deusa hipopótamo, traz cura e proteção.\n")
+		escreverLento("[L] Layla El-Faouly — ágil e feroz no combate.\n")
+		escreverLento("[S] Seguir sozinho — mais perigoso, mas sem restrições.\n")
+		cadeia companhia
+		leia(companhia)
+
+		se(companhia == "T" ou companhia == "t")
+		{
+			escreverLento("\nTaweret sorri docemente: \"Vou cuidar de você, pequeno guerreiro.\"\n")
+			escreverLento("Você sente sua energia restaurada.\n")
+			vidaJogador = vidaJogador + 20
+		}
+		senao se(companhia == "L" ou companhia == "l")
+		{
+			escreverLento("\nLayla diz: \"Você vai precisar de mim lá dentro.\"\n")
+			// bônus de dano na batalha
+			ajudaLayla = verdadeiro
+		}
+		senao
+		{
+			escreverLento("\nVocê decide seguir sozinho\n")
+		}
+
+    	caminho_itens()
+
+    	escreverLento("Seguindo em frente, em direção ao templo, você encontra um inimigo\n")
+    	escreverLento("É o avatar de Ammit, Arthur Harrow...\n")
+    	escreverLento("Ele te impede de seguir adiante, vocês terão que batalhar!\n")
+    	escreverLento("A batalha começa em: \n")
+
+    	para(inteiro i=3; i > 0; i--)
+    	{
+			escreverLento(i + "\n")
+    	}
+	}
+
+	//aqui é onde escolhe o "personagem"
+    funcao escolha_personalidade()
+    {
+    	cadeia p
+    	
+    	escreverLento("\nVocê escolhe prosseguir\n")
+    	escreverLento("\n[M]arc Spector - combate equilibrado, força e instinto\n")
+    	escreverLento("\n[S]teven Grant - conhecimento de símbolos e enigmas antigos.\n")
+    	escreverLento("\n[J]ake Lockley - motorista de táxi sombrio, rápido e letal, mas imprudente.\n")
+    	
+    	leia(p)
+
+    	se(p == "M" ou (p == "m"))
+    	{
+    		escreverLento("\nMarc Spector selecionado\n")
+    	}
+    	senao se(p == "J" ou (p == "j"))
+    	{
+    		escreverLento("Jake Lockley selecionado\n")
+    	}
+    	senao
+    	{
+    		escreverLento("\nSteven Grant selecionado\n")
+    	}
+    }
+
+	//lugares onde os itens podem ser encontrados
+    funcao caminho_itens()
+    {
+		escreverLento("\nPara concluir sua missão com mais facilidade, você precisa se equipar!\n")
+		escreverLento("\nNesses lugares você pode encontrar Armadura, Bastão ou uma arma muito especial!\n")
+		escreverLento("\nPara qual você gostaria de ir?\n")
+		escreverLento("[1] Sala da Lua\n") //aqui ganha armadura
+		escreverLento("[2] Caverna dos Ossos\n") //aqui ganha bastão
+		escreverLento("[3] Torre Celestial\n") //aqui ganha chakram, ele só pode ser usado uma vez
+		escreverLento("[4] Biblioteca de Areia\n")
+		inteiro opcao
+		leia(opcao)
+		escolha (opcao)
+		{
+			caso 1:
+				escreverLento("\nVocê recebeu A Armadura Lunar!!!\n")
+				temArmadura = verdadeiro
+				pare
+			caso 2:
+				escreverLento("\nVocê recebeu O Bastão Lunar!\n")
+				temBastao = verdadeiro
+				pare
+			caso 3:
+				escreverLento("\nVocê recebeu o Chakram Lunar!!!!\n")
+				temChakram = verdadeiro
+				pare
+			caso 4:
+				escreverLento("\nVocê recebeu um pergaminho que revela o ponto fraco de Ammit!\n")
+				pergaminho = verdadeiro
+				pare
+			caso contrario:
+				escreverLento("\nOpção Inválida\n")
+				pare
+		}
+
+		escreverLento("Agora você está quase pronto para cumprir sua missão...\n")
+    }
+
+	funcao escreverLento(cadeia palavra)
+	{
+		inteiro quant
+		caracter letra
+
+    	quant = t.numero_caracteres(palavra)
+
+    	para (inteiro i = 0; i < quant; i++)
+    	{
+       		letra = t.obter_caracter(palavra, i)
+        	escreva(letra)
+        	u.aguarde(5)
+    	}
+	}
+}
