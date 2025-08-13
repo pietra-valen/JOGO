@@ -29,10 +29,12 @@ programa
         escreva("======================================================\n\n")
 
         escreverLento("Você é Marc Spector, um homem atormentado por múltiplas personalidades – Steven, Jake e ele mesmo.\n")
-        escreverLento("Morto em combate, foi trazido de volta à vida como o avatar do deus egípcio Khonshu, tornando-se o Cavaleiro da Lua.\n\n")
+        escreverLento("Morto em combate, foi trazido de volta à vida como o avatar do deus egípcio Khonshu, tornando-se\n")
+        escreverLento("O Cavaleiro da Lua.\n\n")
 
         escreverLento("Agora, Khonshu o envia em uma missão urgente:\n")
-        escreverLento("Impedir que a deusa Ammit, devoradora de almas, desperte e julgue toda a humanidade antes mesmo que as pessoas cometam seus crimes.\n\n")
+        escreverLento("Impedir que a deusa Ammit, devoradora de almas, desperte e julgue toda a humanidade antes mesmo\n")
+        escreverLento("que as pessoas cometam seus crimes.\n\n")
 
         escreverLento("Durante a sua jornada você:\n")
         escreverLento("* Enfrentará visões.\n")
@@ -44,8 +46,10 @@ programa
     funcao jogo_escolhas()
     {
 		cadeia escolher
-		escreverLento("\n\nKhonshu surge no reflexo rachado do espelho, seu rosto esquelético se projetando para fora da superfície como se fosse romper o vidro. Sua voz ecoa dentro da sua mente, grave e inevitável: Marc... o julgamento começou\n")
-    	escreverLento("(A)ceitar seguir o chamado e entregar-se à missão. ")
+		escreverLento("\n\nKhonshu surge no reflexo rachado do espelho, seu rosto esquelético se projetando\n")
+		escreverLento("para fora da superfície como se fosse romper o vidro. Sua voz ecoa dentro da sua mente, grave e\n")
+		escreverLento("inevitável: Marc... o julgamento começou\n\n")
+    	escreverLento("(A)ceitar seguir o chamado e entregar-se à missão. \n")
     	escreverLento("Ou (R)esistir, tentando manter o controle da sua vida.?")
     	leia(escolher)
 
@@ -63,7 +67,8 @@ programa
 
 		escolha_personalidade()
 
-		escreverLento("\nNo horizonte, duas figuras se aproximam. Uma é imensa, sorridente e com cabeça de hipopótamo. A outra, uma mulher de olhar afiado e postura de guerreira.\n")
+		escreverLento("\nNo horizonte, duas figuras se aproximam. Uma é imensa, e com cabeça de hipopótamo.\n") 
+		escreverLento("A outra, uma mulher de olhar afiado e postura de guerreira.\n")
 		escreverLento("[T] Taweret — a deusa hipopótamo, traz cura e proteção.\n")
 		escreverLento("[L] Layla El-Faouly — ágil e feroz no combate.\n")
 		escreverLento("[S] Seguir sozinho — mais perigoso, mas sem restrições.\n")
@@ -105,7 +110,7 @@ programa
     {
     	cadeia p
     	
-    	escreverLento("\nVocê escolhe prosseguir\n")
+    	escreverLento("\nVocê escolhe prosseguir com: \n")
     	escreverLento("\n[M]arc Spector - combate equilibrado, força e instinto\n")
     	escreverLento("\n[S]teven Grant - conhecimento de símbolos e enigmas antigos.\n")
     	escreverLento("\n[J]ake Lockley - motorista de táxi sombrio, rápido e letal, mas imprudente.\n")
@@ -175,7 +180,7 @@ programa
     	{
        		letra = t.obter_caracter(palavra, i)
         	escreva(letra)
-        	u.aguarde(5)
+        	u.aguarde(25)
     	}
 	}
 }
