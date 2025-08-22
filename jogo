@@ -113,103 +113,6 @@ programa {
 			escreverLento(i + "\n")
 		}
 
-		escreva("  ____       _______       _      _    _ ______ _ \n")
-		escreva(" |  _ \\   /\\|__   __|/\\   | |    | |  | |  ____| |\n")
-		escreva(" | |_) | /  \\  | |  /  \\  | |    | |__| | |__  | |\n")
-		escreva(" |  _ < / /\\ \\ | | / /\\ \\ | |    |  __  |  __| | |\n")
-		escreva(" | |_) / ____ \\| |/ ____ \\| |____| |  | | |____|_|\n")
-		escreva(" |____/_/    \\_\\_/_/    \\_\\______|_|  |_|______(_)\n")
-		escreva("                                                  \n")
-
-		limpa()
-
-		// ---------------- BATALHA ATUALIZADA ----------------
-		inteiro vida_Harrow = 120
-		inteiro danoHarrow = u.sorteia(5, 10)
-		enquanto(vida_Harrow > 0 e vidaJogador > 0)
-		{
-			escreverLento("Você escolhe:\n")
-			escreverLento("[ A ] atacar\n")
-			escreverLento("[ D ] defender\n")
-			se(companhia == "T" ou companhia == "t")
-			{
-				escreverLento("[ T ] pedir ajuda a Taweret\n")
-			}
-
-			cadeia ataqueDefesa
-			leia(ataqueDefesa)
-
-			se(ataqueDefesa == "A" ou ataqueDefesa == "a")
-			{
-				danoJogador = u.sorteia(10, 20)
-
-				vidaJogador = vidaJogador - danoHarrow
-				
-				se(temBastao == verdadeiro)
-				{
-					danoJogador = danoJogador + 5
-					escreverLento("Você ataca com o bastão lunar!\n")
-				}
-
-				se(temChakram == verdadeiro e chakramUsado == falso)
-				{
-					escreverLento("Você deseja usar o chakram lunar agora? \n")
-					escreverLento("[ S ] sim\n")
-					escreverLento("[ N ] não\n")
-					leia(simNao)
-					se(simNao == "s" ou simNao == "S")
-					{
-						vida_Harrow = vida_Harrow - 30
-						chakramUsado = verdadeiro
-						escreverLento("Você lança o chakram lunar! -30 de vida do inimigo!\n")
-					}
-				}
-
-				vida_Harrow = vida_Harrow - danoJogador
-				escreva("Sua vida: ", vidaJogador, " | Vida do Inimigo: ", vida_Harrow, "\n")
-			}
-			senao se(ataqueDefesa == "D" ou ataqueDefesa == "d")
-			{
-				danoHarrow = u.sorteia(5, 10)
-				
-				se(temArmadura == verdadeiro)
-				{
-					danoHarrow = danoHarrow - 5
-					se(danoHarrow < 0)
-					{
-						danoHarrow = 0
-					}
-				}
-				vidaJogador = vidaJogador - danoHarrow
-				escreva("Sua vida: ", vidaJogador, " | Vida do Inimigo: ", vida_Harrow, "\n")
-			}
-			senao se((ataqueDefesa == "T" ou ataqueDefesa == "t") e (companhia == "T" ou companhia == "t"))
-			{
-				inteiro sorte = u.sorteia(1, 2)
-				se(sorte == 1)
-				{
-					vidaJogador = vidaJogador + 20
-					se(vidaJogador > 320)
-					{
-						vidaJogador = 320
-					}
-					escreverLento("Taweret aparece e restaura parte de sua energia! +20 de vida.\n")
-				}
-				senao
-				{
-					escreverLento("Taweret bloqueia o ataque inimigo! Nenhum dano sofrido.\n")
-				}
-				escreva("Sua vida: ", vidaJogador, " | Vida do Inimigo: ", vida_Harrow, "\n")
-			}
-		}
-
-		// ---------------- RESULTADO DA BATALHA ----------------
-		se(vida_Harrow <= 0)
-		{
-			escreverLento("\nCom um último golpe, Harrow cai diante de você.\n")
-			escreverLento("Khonshu sussurra: \"Ainda há muito a fazer, avatar da lua...\"\n")
-			escreva("\n=== VITÓRIA ===\n")
-		}
 	}
 
 	funcao escolha_personalidade()
@@ -293,6 +196,108 @@ programa {
 			letra = t.obter_caracter(palavra, i)
 			escreva(letra)
 			u.aguarde(10)
+		}
+	}
+
+
+		funcao batalhaHarrow(){
+		
+		escreva("  ____       _______       _      _    _ ______ _ \n")
+		escreva(" |  _ \\   /\\|__   __|/\\   | |    | |  | |  ____| |\n")
+		escreva(" | |_) | /  \\  | |  /  \\  | |    | |__| | |__  | |\n")
+		escreva(" |  _ < / /\\ \\ | | / /\\ \\ | |    |  __  |  __| | |\n")
+		escreva(" | |_) / ____ \\| |/ ____ \\| |____| |  | | |____|_|\n")
+		escreva(" |____/_/    \\_\\_/_/    \\_\\______|_|  |_|______(_)\n")
+		escreva("                                                  \n")
+
+		limpa()
+
+		// ---------------- BATALHA ATUALIZADA ----------------
+		inteiro vida_Harrow = 120
+		inteiro danoHarrow = u.sorteia(5, 10)
+		enquanto(vida_Harrow >= 0 e vidaJogador >= 0)
+		{
+			escreverLento("Você escolhe:\n")
+			escreverLento("[ A ] atacar\n")
+			escreverLento("[ D ] defender\n")
+			se(companhia == "T" ou companhia == "t")
+			{
+				escreverLento("[ T ] pedir ajuda a Taweret\n")
+			}
+
+			cadeia ataqueDefesa
+			leia(ataqueDefesa)
+
+			se(ataqueDefesa == "A" ou ataqueDefesa == "a")
+			{
+				danoJogador = u.sorteia(10, 20)
+
+				vidaJogador = vidaJogador - danoHarrow
+				
+				se(temBastao == verdadeiro)
+				{
+					danoJogador = danoJogador + 5
+					escreverLento("Você ataca com o bastão lunar!\n")
+				}
+
+				se(temChakram == verdadeiro e chakramUsado == falso)
+				{
+					escreverLento("Você deseja usar o chakram lunar agora? \n")
+					escreverLento("[ S ] sim\n")
+					escreverLento("[ N ] não\n")
+					leia(simNao)
+					se(simNao == "s" ou simNao == "S")
+					{
+						vida_Harrow = vida_Harrow - 30
+						chakramUsado = verdadeiro
+						escreverLento("Você lança o chakram lunar! -30 de vida do inimigo!\n")
+					}
+				}
+
+				vida_Harrow = vida_Harrow - danoJogador
+				escreva("Sua vida: ", vidaJogador, " | Vida do Inimigo: ", vida_Harrow, "\n")
+			}
+			senao se(ataqueDefesa == "D" ou ataqueDefesa == "d")
+			{
+				danoHarrow = u.sorteia(5, 10)
+				
+				se(temArmadura == verdadeiro)
+				{
+					danoHarrow = danoHarrow - 5
+					se(danoHarrow < 0)
+					{
+						danoHarrow = 0
+					}
+				}
+				vidaJogador = vidaJogador - danoHarrow
+				escreva("Sua vida: ", vidaJogador, " | Vida do Inimigo: ", vida_Harrow, "\n")
+			}
+			senao se((ataqueDefesa == "T" ou ataqueDefesa == "t") e (companhia == "T" ou companhia == "t"))
+			{
+				inteiro sorte = u.sorteia(1, 2)
+				se(sorte == 1)
+				{
+					vidaJogador = vidaJogador + 20
+					se(vidaJogador > 320)
+					{
+						vidaJogador = 320
+					}
+					escreverLento("Taweret aparece e restaura parte de sua energia! +20 de vida.\n")
+				}
+				senao
+				{
+					escreverLento("Taweret bloqueia o ataque inimigo! Nenhum dano sofrido.\n")
+				}
+				escreva("Sua vida: ", vidaJogador, " | Vida do Inimigo: ", vida_Harrow, "\n")
+			}
+		}
+
+		// ---------------- RESULTADO DA BATALHA ----------------
+		se(vida_Harrow <= 0)
+		{
+			escreverLento("\nCom um último golpe, Harrow cai diante de você.\n")
+			escreverLento("Khonshu sussurra: \"Ainda há muito a fazer, avatar da lua...\"\n")
+			escreva("\n=== VITÓRIA ===\n")
 		}
 	}
 }
