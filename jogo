@@ -2,7 +2,7 @@ programa {
     inclua biblioteca Util --> u
     inclua biblioteca Texto --> t
 
-    // Inventário
+    // Inventário e Status
     logico temArmadura = falso
     logico temBastao = falso
     logico temChakram = falso
@@ -15,19 +15,23 @@ programa {
     logico ajudadoPorKhonshu = falso
     logico ajudaLayla = falso
     logico ajudaTawret = falso
-
+    
+    // Variáveis auxiliares
     cadeia simNao
     cadeia companhia
+    inteiro escolhaNumerica
 
     funcao inicio() {
+    	
         introducao_historia()
         limpa()
+        
         jogo_escolhas()
     }
 
     funcao introducao_historia() {
         escreva("======================================================\n")
-        escreva("            LUA E SOMBRAS - CAVALEIRO DA LUA         \n")
+        escreva("             LUA E SOMBRAS - CAVALEIRO DA LUA         \n")
         escreva("======================================================\n\n")
 
         escreverLento("Você é Marc Spector, um homem atormentado por múltiplas personalidades – Steven, Jake e ele mesmo.\n")
@@ -37,7 +41,7 @@ programa {
 
     funcao jogo_escolhas() {
         cadeia escolher
-        escreverLento("\nKhonshu surge no reflexo rachado do espelho, seu rosto esquelético se projetando.")
+        escreverLento("\nKhonshu surge no reflexo rachado do espelho, seu rosto esquelético se projetando.\n")
         escreverLento("(A)ceitar ou (R)esistir?\n")
         leia(escolher)
 
@@ -48,57 +52,65 @@ programa {
             escreverLento("Você resiste, mas Khonshu o força. Você sente dor (-10 vida).\n")
             vidaJogador -= 10
         }
-
+        
+        
         escolha_personalidade()
+        
         escolha_companhia()
+        
         caminho_itens()
-
-        escreverLento("\nVocê segue em frente, mas no meio do caminho encontra Arthur Harrow...\n")
-        u.aguarde(1000)
+        
+        escreverLento("\nVocê segue em frente, mas no meio do caminho encontra Arthur Harrow o avatar de Ammit...\n")
+        
         batalhaHarrow()
 
         escreverLento("\nApós derrotar Harrow, seu corpo está exausto, mas a missão ainda não terminou...\n")
+        
         missao_balanca()
+        
         caminho_memorias()
+        
         escreverLento("\nPronto para os desafios finais, você respira fundo e segue adiante.\n")
     }
 
     funcao escolha_personalidade() {
         cadeia personagens[3] = {"Marc Spector", "Steven Grant", "Jake Lockley"}
+        inteiro escolhaNumerica
 
-        escreva("\nEscolha sua personalidade:\n")
+        escreverLento("Escolha com qual personalidade deseja seguir: \n")
         para (inteiro i = 0; i < 3; i++) {
-            escreva("[", i+1, "] ", personagens[i], "\n")  // corrigido: não usar i++ aqui
+            escreva("[", i, "] ", personagens[i], "\n")
         }
+        
+        leia(escolhaNumerica)
 
-        cadeia escolhaPersonagem
-        leia(escolhaPersonagem)
-
-        se (escolhaPersonagem == "1") {
-            escreverLento("Marc Spector selecionado.\n")
-        } senao se (escolhaPersonagem == "2") {
-            escreverLento("Steven Grant selecionado.\n")
+        se (escolhaNumerica == 0) {
+            escreverLento("Você escolheu Marc Spector!\n")
+        } senao se (escolhaNumerica == 1) {
+            escreverLento("Você escolheu Steven Grant!\n")
+        } senao se (escolhaNumerica == 2) {
+            escreverLento("Você escolheu Jake Lockley!\n")
         } senao {
-            escreverLento("Jake Lockley selecionado.\n")
+            escreverLento("Escolha inválida. Seguindo com Marc Spector.\n")
         }
     }
-
+    
     funcao escolha_companhia() {
         cadeia companhias[3] = {"Taweret", "Layla", "Seguir sozinho"}
 
         escreva("\nEscolha sua companhia:\n")
         para (inteiro i = 0; i < 3; i++) {
-            escreva("[", i+1, "] ", companhias[i], "\n")  // corrigido: não usar i++ aqui
+            escreva("[", i, "] ", companhias[i], "\n")  
         }
 
-        leia(companhia)
+        leia(escolhaNumerica)
 
-        se (companhia == "1") {
+        se (escolhaNumerica == 0) {
             ajudaTawret = verdadeiro
-            escreverLento("Taweret se junta a você.\n")
-        } senao se (companhia == "2") {
+            escreverLento("Taweret se junta a você e voces seguem juntos na joranada.\n")
+        } senao se (escolhaNumerica == 1) {
             ajudaLayla = verdadeiro
-            escreverLento("Layla se junta a você.\n")
+            escreverLento("Layla se junta a você e voces seguem juntos na joranada.\n")
         } senao {
             escreverLento("Você segue sozinho.\n")
         }
@@ -107,26 +119,27 @@ programa {
     funcao caminho_itens() {
         cadeia itens[4] = {"Salão Lunar", "Caverna dos ossos", "Torre Celestial", "Templo de Areia"}
 
-        escreva("\nEscolha o local para pegar os itens:\n")
+        escreva("\nEscolha um local para se equipar e realizar a missao com facilidade:\n")
         para (inteiro i = 0; i < 4; i++) {
-            escreva("[", i+1, "] ", itens[i], "\n")  // corrigido
+            escreva("[", i, "] ", itens[i], "\n")  
         }
 
-        inteiro opcao
-        leia(opcao)
+        leia(escolhaNumerica)
 
-        se (opcao == 1) {
+        se (escolhaNumerica == 0) {
             temArmadura = verdadeiro
             escreverLento("Você recebeu a Armadura Lunar.\n")
-        } senao se (opcao == 2) {
+        } senao se (escolhaNumerica == 1) {
             temBastao = verdadeiro
             escreverLento("Você recebeu o Bastão Lunar.\n")
-        } senao se (opcao == 3) {
+        } senao se (escolhaNumerica == 2) {
             temChakram = verdadeiro
             escreverLento("Você recebeu o Chakram Lunar.\n")
-        } senao se (opcao == 4) {
+        } senao se (escolhaNumerica == 3) {
             pergaminho = verdadeiro
             escreverLento("Você recebeu o Pergaminho com a fraqueza de Ammit.\n")
+        } senao {
+            escreverLento("Escolha inválida. Você não encontra nenhum item.\n")
         }
     }
 
@@ -144,14 +157,14 @@ programa {
 
         enquanto (vida_Harrow > 0 e vidaJogador > 0) {
             escreva("\nEscolha: [A] atacar | [D] defender")
-            se (companhia == "1") {
+            se (ajudaTawret) { 
                 escreva(" | [T] pedir ajuda a Taweret")
             }
             escreva("\n")
 
             cadeia escolher
             leia(escolher)
-
+            
             se (escolher == "A" ou escolher == "a") {
                 danoJogador = u.sorteia(10, 20)
                 se (temBastao) {
@@ -168,7 +181,7 @@ programa {
                     }
                 }
                 vidaJogador -= danoHarrow
-                escreva("Você recebe ", danoHarrow, " de dano.\n")
+                escreva("Você recebe ", danoHarrow, " de dano. E Harrow recebe ", danoJogador, " de dano\n")
 
                 se (temChakram e chakramUsado == falso) {
                     escreverLento("Usar Chakram agora? (S/N)\n")
@@ -188,8 +201,8 @@ programa {
                     }
                 }
                 vidaJogador -= danoHarrow
-                escreva("Você se defende e recebe ", danoHarrow, " de dano.\n")
-            } senao se (escolher == "T" e companhia == "1") {
+                escreva("Você se defende e recebe ", danoHarrow, " de dano. E Harrow recebe ", danoJogador, " de dano\n")
+            } senao se (escolher == "T" e ajudaTawret) {
                 inteiro sorte = u.sorteia(1, 2)
                 se (sorte == 1) {
                     vidaJogador += 20
@@ -211,6 +224,9 @@ programa {
 
         se (vida_Harrow <= 0) {
             escreverLento("Harrow cai. Vitória!\n")
+        } senao {
+            escreverLento("Você foi derrotado. Fim de jogo.\n")
+            escreverLento("Sua jornada como Cavaleiro da Lua chegou ao fim.")
         }
     }
 
@@ -253,27 +269,24 @@ programa {
     }
 
     funcao caminho_memorias() {
-        cadeia portas[3] = {
-            "Casa simples — ecos da infância.",
-            "Templo em ruínas — sangue derramado nas areias do Egito.",
-            "Corredor sombrio — sombras internas."
-        }
-
+        cadeia portas[3] = {"Casa simples — ecos da infancia", "Templo em ruínas — sangue derramado nas areias do Egito.", "Corredor sombrio — sombras internas."}
         inteiro efeitosVida[3] = {-10, +40, -15}
         inteiro efeitosDano[3] = {5, 0, 10}
-
+        
         escreva("\nEscolha uma porta:\n")
         para (inteiro i = 0; i < 3; i++) {
-            escreva("[", i+1, "] ", portas[i], "\n")  // corrigido
+            escreva("[", i, "] ", portas[i], "\n")  
         }
-
-        inteiro escolhaPorta
-        leia(escolhaPorta)
-        escolhaPorta -= 1
-
-        vidaJogador += efeitosVida[escolhaPorta]
-        danoJogador += efeitosDano[escolhaPorta]
-
-        escreverLento("Você atravessa a porta escolhida. Vida atual: " + vidaJogador + ", Dano permanente: " + danoJogador + "\n")
+        
+        leia(escolhaNumerica) 
+        
+        se (escolhaNumerica >= 0 e escolhaNumerica < 3) {
+            vidaJogador += efeitosVida[escolhaNumerica]
+            danoJogador += efeitosDano[escolhaNumerica]
+            escreverLento("Você atravessa a porta escolhida. Vida atual: " + vidaJogador + ", Dano permanente: " + danoJogador + "\n")
+        } senao {
+            escreverLento("Escolha inválida. Você fica no limbo, sua mente está em guerra. (-10 vida)\n")
+            vidaJogador -= 10
+        }
     }
 }
