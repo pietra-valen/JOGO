@@ -60,7 +60,7 @@ programa {
         
         caminho_itens()
         
-        escreverLento("\nVocê segue em frente, mas no meio do caminho encontra Arthur Harrow o avatar de Ammit...\n")
+        escreverLento("\nVocê segue em frente, mas no meio do caminho encontra Arthur Harrow, o avatar de Ammit...\n")
         
         batalhaHarrow()
 
@@ -96,7 +96,7 @@ programa {
     }
     
     funcao escolha_companhia() {
-        cadeia companhias[3] = {"Taweret", "Layla", "Seguir sozinho"}
+        cadeia companhias[3] = {"Taweret - pode curar ou bloquear ataques", "Layla - ajuda em combate", "Seguir sozinho - sem beneficios"}
 
         escreva("\nEscolha sua companhia:\n")
         para (inteiro i = 0; i < 3; i++) {
@@ -129,15 +129,19 @@ programa {
         se (escolhaNumerica == 0) {
             temArmadura = verdadeiro
             escreverLento("Você recebeu a Armadura Lunar.\n")
+            
         } senao se (escolhaNumerica == 1) {
             temBastao = verdadeiro
             escreverLento("Você recebeu o Bastão Lunar.\n")
+            
         } senao se (escolhaNumerica == 2) {
             temChakram = verdadeiro
             escreverLento("Você recebeu o Chakram Lunar.\n")
+            
         } senao se (escolhaNumerica == 3) {
             pergaminho = verdadeiro
             escreverLento("Você recebeu o Pergaminho com a fraqueza de Ammit.\n")
+            
         } senao {
             escreverLento("Escolha inválida. Você não encontra nenhum item.\n")
         }
@@ -156,6 +160,7 @@ programa {
         inteiro danoHarrow
 
         enquanto (vida_Harrow > 0 e vidaJogador > 0) {
+        	
             escreva("\nEscolha: [A] atacar | [D] defender")
             se (ajudaTawret) { 
                 escreva(" | [T] pedir ajuda a Taweret")
