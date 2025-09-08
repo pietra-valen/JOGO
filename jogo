@@ -153,8 +153,9 @@ programa {
         
         caminho_memorias()
         
-        escreverLento("\nPronto para os desafios finais, você respira fundo e segue em direçao ao templo de Ammitã.\n")
+        escreverLento("\nPronto para os desafios finais, você respira fundo e segue em direçao ao templo de Ammit.\n")  
     }
+    
 
     funcao escolha_personalidade() {
         cadeia personagens[3] = {"Marc Spector", "Steven Grant", "Jake Lockley"}
