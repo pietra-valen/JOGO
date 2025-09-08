@@ -37,7 +37,7 @@ programa {
     escreva("_/ ___\\\\__  \\\\  \\/ /\\__  \\ |  | _/ __ \\|  \\_  __ \\/  _ \\   / __ |\\__  \\   |  | |  |  \\__  \\  \n")
     escreva("\\  \\___ / __ \\\\   /  / __ \\|  |_\\  ___/|  ||  | \\(  <_> ) / /_/ | / __ \\_ |  |_|  |  // __ \\_\n")
     escreva(" \\___  >____  /\\_/  (____  /____/\\___  >__||__|   \\____/  \\____ |(____  / |____/____/(____  / \n")
-    escreva("     \\/     \\/           \\/          \\/                        \\/     \\/                  \\/ \n")
+    escreva("     \\/     \\/           \\/          \\/                        \\/     \\/                  \\/ \n\n")
 
         escreverLento("Você é Marc Spector, um homem atormentado por múltiplas personalidades – Steven, Jake e ele mesmo.\n")
         escreverLento("Morto em combate, foi trazido de volta à vida como o avatar do deus egípcio Khonshu, tornando-se o Cavaleiro da Lua.\n\n")
@@ -48,7 +48,7 @@ programa {
 
     funcao jogo_escolhas() {
         cadeia escolher
-        escreverLento("\nKhonshu surge no reflexo rachado do espelho, seu rosto esquelético se projetando.\n")
+        escreverLento("\nKhonshu surge no reflexo rachado do espelho, seu rosto esquelético se projetando.\n\n")
         escreva(",,...                       ....... ......................,,,,,,,,,,,,,#(#,,,,,,,,,,,,,,,(%##%,,,,,,\n")
     escreva("........          ...   ...........................,....,,,,,,,,,,,,,,,,#%%(,,,,,,,,,,,,(#%(%#,,,,,,\n")
     escreva(".............................,,,,,,,...,,,......,,,,,,,,,,,,,,,,,,,,,,,,,##%%%*,,,,,,/(#%%%/#*,,,,,,\n")
@@ -84,7 +84,8 @@ programa {
     escreva("    ,//((/((//(&%. (%%%%%%%######((#(((**/(#/%&@&%#%/%%%%%#%&&@&%%&%&&@%&@@(#(#%(((# ... ##%%    ...\n")
     escreva("    ,/(((((///((#      %%%#%%%%###%%%%#(/#((#%///(//(/#(&%@&%%(/((%(%&@&%@@#(((#(/((.....%#%##......\n")
     escreva("    ./*//(%#((((##     %%&%%%%%%%%%%%%##(##(#//(((/(/%(&%%%(%**,,*///(&#(&&(###%#//(.   .#%%%%......\n")
-    escreva("    .*(/(#//((#%(#.    &%&&%&&&%%%%%%%%####%#/(/////%(%%%%*/*,*,,**,,/#%#&&(##%#((///   .*#%%%......\n")
+    escreva("    .*(/(#//((#%(#.    &%&&%&&&%%%%%%%%####%#/(/////%(%%%%*/*,*,,**,,/#%#&&(##%#((///   .*#%%%......\n\n")
+        
         escreverLento("(A)ceitar ou (R)esistir?\n")
         leia(escolher)
 
@@ -135,7 +136,7 @@ programa {
     escreva("                  .#&@,            ,*     &.      @        @ *       *@     *@@@@#,,  ,%@@%@@&  ..  &#                            %        @          \n")
     escreva("              @  *.@     %                  %/  @@,   #.     @   @/ .@#                     .@                        .@&@@@@@@              @/       \n")
     escreva("               &  *   %       ,@.          @      /      @,% .( @.   %*           #@*                         .@@/&    &         (@      (     @      \n")
-    escreva("            ,,.   @             @  ,/&          &     @.(/ .@  (%.       %                             .@@@ (   (         *  ,%    @@           @     \n")
+    escreva("            ,,.   @             @  ,/&          &     @.(/ .@  (%.       %                             .@@@ (   (         *  ,%    @@           @     \n\n")
         
         
         escolha_companhia()
@@ -152,7 +153,7 @@ programa {
         
         caminho_memorias()
         
-        escreverLento("\nPronto para os desafios finais, você respira fundo e segue adiante.\n")
+        escreverLento("\nPronto para os desafios finais, você respira fundo e segue em direçao ao templo de Ammitã.\n")
     }
 
     funcao escolha_personalidade() {
@@ -167,11 +168,11 @@ programa {
         leia(escolhaNumerica)
 
         se (escolhaNumerica == 0) {
-            escreverLento("Você escolheu Marc Spector!\n")
+            escreverLento("Você escolheu Marc Spector o guerreiro!\n")
         } senao se (escolhaNumerica == 1) {
-            escreverLento("Você escolheu Steven Grant!\n")
+            escreverLento("Você escolheu Steven Grant da loja de presentes!\n")
         } senao se (escolhaNumerica == 2) {
-            escreverLento("Você escolheu Jake Lockley!\n")
+            escreverLento("Você escolheu Jake Lockley o taxista!\n")
         } senao {
             escreverLento("Escolha inválida. Seguindo com Marc Spector.\n")
         }
@@ -332,9 +333,21 @@ programa {
         }
 
         se (vida_Harrow <= 0) {
-            escreverLento("Harrow cai. Vitória!\n")
+          escreverLento("Harrow cai.\n\n")
+escreva("      .__  __               .__        \n")
+escreva("___  _|__|/  |_  ___________|__|____   \n")
+escreva("\\  \\/ /  \\   __\\/  _ \\_  __ \\  \\__  \\  \n")
+escreva(" \\   /|  ||  | (  <_> )  | \\/  |/ __ \\_\n")
+escreva("  \\_/ |__||__|  \\____/|__|  |__(____  /\n")
+escreva("                                    \\/  \n")
+		
         } senao {
-            escreverLento("Você foi derrotado. Fim de jogo.\n")
+            escreva(".___                          __          \n")
+		  escreva("  __| _/__________________  _____/  |______   \n")
+		  escreva(" / __ |/ __ \\_  __ \\_  __ \\/  _ \\   __\\__  \\  \n")
+		  escreva("/ /_/ \\  ___/|  | \\/|  | \\(  <_> )  |  / __ \\_\n")
+		  escreva("\\____ |\\___  >__|   |__|   \\____/|__| (____  /\n")
+		  escreva("     \\/    \\/                              \\/  \n")
             escreverLento("Sua jornada como Cavaleiro da Lua chegou ao fim.")
         }
     }
