@@ -241,7 +241,7 @@ programa {
 
     funcao batalhaHarrow() {
         inteiro vida_Harrow = 70
-        inteiro danoHarrow
+        inteiro danoHarrow = u.sorteia(5, 20)
 
         enquanto (vida_Harrow > 0 e vidaJogador > 0) {
         	
@@ -266,7 +266,6 @@ programa {
                 }
                 vida_Harrow -= danoJogador
 
-                danoHarrow = u.sorteia(5, 10)
                 se (temArmadura) {
                     danoHarrow -= 20
                     
@@ -289,8 +288,10 @@ programa {
                 }
             } senao se (escolher == "D" ou escolher == "d") {
                 danoHarrow = u.sorteia(5, 10)
+                
                 se (temArmadura) {
                     danoHarrow -= 5
+                    
                     se (danoHarrow < 0) {
                         danoHarrow = 0
                     }
@@ -453,5 +454,9 @@ escreva("                                    \\/  \n")
             escreverLento("Escolha inválida. Você fica no limbo, sua mente está em guerra. (-10 vida)\n")
             vidaJogador -= 10
         }
+    }
+
+    funcao batalhaFinal(){
+    	
     }
 }
