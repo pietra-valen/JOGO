@@ -3,7 +3,7 @@ programa {
     inclua biblioteca Texto --> t
 
     // Inventário e Status
-    logico temArmadura = falso
+    logico temArmadura = falso // defesa = 20
     logico temBastao = falso
     logico temChakram = falso
     logico chakramUsado = falso
@@ -20,6 +20,8 @@ programa {
     cadeia simNao
     cadeia companhia
     inteiro escolhaNumerica
+    inteiro usosLayla = 10
+    inteiro usosTawreet = 10
 
     funcao inicio() {
     	
@@ -30,18 +32,59 @@ programa {
     }
 
     funcao introducao_historia() {
-        escreva("======================================================\n")
-        escreva("             LUA E SOMBRAS - CAVALEIRO DA LUA         \n")
-        escreva("======================================================\n\n")
+    	
+    escreva("  ____ _____ ___  _______  |  |   ____ |__|______  ____     __| _/____    |  |  __ _______   \n")
+    escreva("_/ ___\\\\__  \\\\  \\/ /\\__  \\ |  | _/ __ \\|  \\_  __ \\/  _ \\   / __ |\\__  \\   |  | |  |  \\__  \\  \n")
+    escreva("\\  \\___ / __ \\\\   /  / __ \\|  |_\\  ___/|  ||  | \\(  <_> ) / /_/ | / __ \\_ |  |_|  |  // __ \\_\n")
+    escreva(" \\___  >____  /\\_/  (____  /____/\\___  >__||__|   \\____/  \\____ |(____  / |____/____/(____  / \n")
+    escreva("     \\/     \\/           \\/          \\/                        \\/     \\/                  \\/ \n")
 
         escreverLento("Você é Marc Spector, um homem atormentado por múltiplas personalidades – Steven, Jake e ele mesmo.\n")
         escreverLento("Morto em combate, foi trazido de volta à vida como o avatar do deus egípcio Khonshu, tornando-se o Cavaleiro da Lua.\n\n")
         escreverLento("Khonshu o envia em uma missão urgente: impedir que a deusa Ammit desperte e julgue toda a humanidade antes mesmo que os crimes aconteçam.\n\n")
+
+        u.aguarde(9000)
     }
 
     funcao jogo_escolhas() {
         cadeia escolher
         escreverLento("\nKhonshu surge no reflexo rachado do espelho, seu rosto esquelético se projetando.\n")
+        escreva(",,...                       ....... ......................,,,,,,,,,,,,,#(#,,,,,,,,,,,,,,,(%##%,,,,,,\n")
+    escreva("........          ...   ...........................,....,,,,,,,,,,,,,,,,#%%(,,,,,,,,,,,,(#%(%#,,,,,,\n")
+    escreva(".............................,,,,,,,...,,,......,,,,,,,,,,,,,,,,,,,,,,,,,##%%%*,,,,,,/(#%%%/#*,,,,,,\n")
+    escreva(",,,,,,,,,,,,,,,........,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#%#%#%%%###%%%%%%%,,,,,,,\n")
+    escreva(",,,,,,,,,,,,,,,,.,,,..,,,,,,,.........  .. ..,,,,,,.    ,,,,,,,,,,,,,,,,,,,,*%#%&%#%%&&%#%#&,,,,,,,,\n")
+    escreva(".,,,,,,,,,,,,,,,,,,,,,,,,,,..             /# ,     ,. &&&&&,,,,,,,,,,,,,,,,,,,,#&&&##%%%%%%/,,,,,,,,\n")
+    escreva("..,,,,,.,,,,,,,,,,,,,,,,...              &&&     ..  %@@@&&&&,,,,,,,,,,,,,,,,,,,%%%%&%%#/&#,,,,,,,,,\n")
+    escreva(".........,,,,,,,,,,,,,,.....             &&@#  *,.*(%&&&@&&&&(,,,,,,,,,,,,,,,,,,,*&&*%&*##%,,,,,,,,,\n")
+    escreva("...........,,,,,.,,,,,,.....            .(,*,..,,./,/,(&.*/*/&,...................((//#&#%.,,,,,,,,,\n")
+    escreva("...................,,,....            ...,/. ..,,. *..#((((/*....         ....... #%#&@&#,...,,,,,,\n")
+    escreva("..........................         ......(%%.,#%&(*&.(.*.//***..   ......        ,%&&%%%#..,,,,,,,,\n")
+    escreva("....  ................             ......., .*&&@&,*&&/*../,...    ..       ......*(%&%%/......,,,,\n")
+    escreva("..             ...........       ........  ..,%%#,.,,.*/(#...... ..   ............,//((((.,,,.......\n")
+    escreva("                  ......................  ..***....,/#((@&&&(#**............,.....,/#%&%#..,,,,,....\n")
+    escreva("                   ..................... ..,/,*,,(#%@@@@@@@@@@%(*/*,.............../##%%%...........\n")
+    escreva("                 .  ............. ..... ,*,,/(/&@@@@@@@@@@@@@%@@(//(**..,..........,#####,..........\n")
+    escreva("                        ........... ..,.**//%%&@@@@@@@@@@@@@&@@&#(#/(**/,*,,.*......(%&##/..........\n")
+    escreva("                      ............../,.,/((&##&@&%@@@@@@&&@@@&%&&((/%(//(/(/,,...*.,#&(###..........\n")
+    escreva("                ..............  .*,*%#(/((###%%#%&%%%%%%%&@&%%&&&#((#///(((*//*/**#((((###..........\n")
+    escreva(" ......         ....      . ...,/(/##*&((((/#@%%&%#%&&&&%&%&%%%&&%(((((/(((///(/%%((#/.,*,..........\n")
+    escreva("..............   .... ,   ..,.**,(##*%%#&##(@&%%&%&&%&&&%%&&%&&&&%###((/(((//(#%#(/,#&,.**#//.....  \n")
+    escreva(".............     ..  ...../####(##/%%(#%(%&%&%%%%%%%%%&&&%%%%%%&%#(%(#(((///((((///((*,//(###.     \n")
+    escreva("   ..... ..    *.,**/((((((((##&%((%&#%%%%%%#&%%####@&(#%%%%%%@@&@###%/(((((#((/####((%(##(%%#      \n")
+    escreva("       ,*,.,*../ . ,./######%%%#((%&%#(%#%%&&#%###%((###%#%&@@&%%%%##%%(((((((/((*,,,*&&&&&%##(     \n")
+    escreva("    ,(*/(//#(///.. ,.,,./(.....(#%&%&##%&&%&&#&#%#(((###%@&&&&&&&%%%%%#@(((((((/((((#(%%&%%&%%#(  ..\n")
+    escreva("     ...,#/%&&%&%&#/#(///,.,,.%%%&%%(%%@@&&&&%&%#(#%%%%@&&&&&&%&%&&@%#%(&((#(((/(%##(#/#%&&&&&%%,...\n")
+    escreva("   ...,**//.*/%%&%###/((/(/((*%%&&#%%&&&@@&&&%%%%%#%&&@&&&&%&%&&&&&&&@%%#&#(#(((((#&%(#(%%%%%&&%%#...\n")
+    escreva(" .. ..,//((##(/#%#%#%%#(#(*##(//(%%%&&&@@@@@&&%%%%&&&%%@&&&&&&&%&&&@@&%#@((#((((/(&&&&&%#&%&%%%%#/..\n")
+    escreva("  .**,**/(((((####%%%#(%#%%%#(//,%&&&@&@@@@@@@&&&@@&&&&&&&&&&@&&&&&@@@%#@##(#((#((./&&%##%%&%%%%%...\n")
+    escreva("  .((((((####%##%%%%%%%#%#(#/%(/#(,,(&@&@@@&#%@&#(,#/@@%%&&&&&&&&&@@@@%#@@(##/(#(#%    ,##&&&%%%....\n")
+    escreva("    ,*/((((((#%&%%%&%%%%%%#%#(%#(#(((((((/&(#*/***/%(#(#@#%%%&&&&@@@@@@#@@(##(##((#   ..##%%%%%   ..\n")
+    escreva("   .(**,,,/(%%#%%&%&%%%%%%%%%%(###/(((/(###%#%/(/#&&(&#(@%%&&&%&@&&&&&&%&@((#((#(((/ .../#%%%     ..\n")
+    escreva("    ,//((/((//(&%. (%%%%%%%######((#(((**/(#/%&@&%#%/%%%%%#%&&@&%%&%&&@%&@@(#(#%(((# ... ##%%    ...\n")
+    escreva("    ,/(((((///((#      %%%#%%%%###%%%%#(/#((#%///(//(/#(&%@&%%(/((%(%&@&%@@#(((#(/((.....%#%##......\n")
+    escreva("    ./*//(%#((((##     %%&%%%%%%%%%%%%##(##(#//(((/(/%(&%%%(%**,,*///(&#(&&(###%#//(.   .#%%%%......\n")
+    escreva("    .*(/(#//((#%(#.    &%&&%&&&%%%%%%%%####%#/(/////%(%%%%*/*,*,,**,,/#%#&&(##%#((///   .*#%%%......\n")
         escreverLento("(A)ceitar ou (R)esistir?\n")
         leia(escolher)
 
@@ -55,6 +98,45 @@ programa {
         
         
         escolha_personalidade()
+
+ escreva("                                                                                                                                                      \n")
+    escreva("                                                             (@            @/                                                                         \n")
+    escreva("                                                         @(                     #*                                                                    \n")
+    escreva("                                                      @                            ,(                                                                 \n")
+    escreva("                                                   #.                                 &                                                                \n")
+    escreva("                                                 &              @    &                  @                                                              \n")
+    escreva("                                                #            #    @&   .*                 @                                                            \n")
+    escreva("                                              *           */   @      /   #              , @.                                                         \n")
+    escreva("                                             @          @   #           &    @              @.                                                        \n")
+    escreva("                                            @  ,     #    /    @,    .#   ..    @            @                                                        \n")
+    escreva("                                           @  .    (   (     & & (     @(    &     &          @                                                       \n")
+    escreva("                                          &  .  #     .     @ *@                .     #   (    @                                                      \n")
+    escreva("                                         ,    *         &   @  ,              &   /     *  .    @                                                     \n")
+    escreva("                                         ( %     . .@#    @  .(  @    #@   @     @  %            @                                                    \n")
+    escreva("                                        #@      .&    @(,   @ .@     @  ..    @   . , @           *                                                   \n")
+    escreva("                                       %.     & * ,/      @   @       #     *       @  *&     %   @                                                   \n")
+    escreva("                                      @      #   . ,&  /    @   &   @    @             (  .     .  @                                                 \n")
+    escreva("                                     @      *    .& &.&@@%%/  @   %    @   & .@@ .#& &   % %     ( #                                                 \n")
+    escreva("                                    .(     @   . @%    &/      &     & %       @@/     %@/(       / @                                                \n")
+    escreva("                                    &     /       . %##          @@%            &&   .*    (  .     /                                                \n")
+    escreva("                                   &,     *       &   @&.                ,&@@&%   *  (*.@*         @ @                                               \n")
+    escreva("                                  &      @   /    %&  *         %      .           .%&  .      @    ,*.&                                             \n")
+    escreva("                                  @      @     .  . . #                         &   .  ,  @ .       #@                                               \n")
+    escreva("                                 ,.,     @     .   , .     .    *               @,@    @                @                                            \n")
+    escreva("                                 *       @     @   /  .%     @       ##      .   @  / *                 *                                            \n")
+    escreva("                                    *               (, ((&(     &              *@    %     #   .    /   *                                            \n")
+    escreva("                                  . .     #     #    /  & ,@&%(,,((  %@.       %    @          @    @   /                                            \n")
+    escreva("                                .@@  (     &          &   %*                 *. ,  ,                ,   @   /@                                      \n")
+    escreva("                     @@  %@@@     @   #         ,     .. * @    @&**@@(     & &  %    %   @   @    &    ,   @          ,@#                            \n")
+    escreva("                  @#          %    @   .      #   .%     * ,.    *%        ,(# #      @&     ,    (    @,               ,#@@@@@@                      \n")
+    escreva("                 @                  @    &       ,   @    ,.     /#&#     ,  &      @  &    #    (    @         ,&                @%                  \n")
+    escreva("                @                    @     @       .%        &             & ..((        ,.    @    .     /*                         @/               \n")
+    escreva("               @         *             @      @         &       .*&@@@#*   @,               /    (,  &      #*              &           @             \n")
+    escreva("                  .#&@,            ,*     &.      @        @ *       *@     *@@@@#,,  ,%@@%@@&  ..  &#                            %        @          \n")
+    escreva("              @  *.@     %                  %/  @@,   #.     @   @/ .@#                     .@                        .@&@@@@@@              @/       \n")
+    escreva("               &  *   %       ,@.          @      /      @,% .( @.   %*           #@*                         .@@/&    &         (@      (     @      \n")
+    escreva("            ,,.   @             @  ,/&          &     @.(/ .@  (%.       %                             .@@@ (   (         *  ,%    @@           @     \n")
+        
         
         escolha_companhia()
         
@@ -128,15 +210,15 @@ programa {
 
         se (escolhaNumerica == 0) {
             temArmadura = verdadeiro
-            escreverLento("Você recebeu a Armadura Lunar.\n")
+            escreverLento("Você recebeu a Armadura Lunar (proteje 20 de dano do ataque inimigo).\n")
             
         } senao se (escolhaNumerica == 1) {
             temBastao = verdadeiro
-            escreverLento("Você recebeu o Bastão Lunar.\n")
+            escreverLento("Você recebeu o Bastão Lunar (+15 de dano).\n")
             
         } senao se (escolhaNumerica == 2) {
             temChakram = verdadeiro
-            escreverLento("Você recebeu o Chakram Lunar.\n")
+            escreverLento("Você recebeu o Chakram Lunar. (so pode usar uma unica vez, da 50 de dano\n")
             
         } senao se (escolhaNumerica == 3) {
             pergaminho = verdadeiro
@@ -156,7 +238,7 @@ programa {
     }
 
     funcao batalhaHarrow() {
-        inteiro vida_Harrow = 120
+        inteiro vida_Harrow = 70
         inteiro danoHarrow
 
         enquanto (vida_Harrow > 0 e vidaJogador > 0) {
@@ -165,6 +247,9 @@ programa {
             se (ajudaTawret) { 
                 escreva(" | [T] pedir ajuda a Taweret")
             }
+            senao se(ajudaLayla){
+            	escreva(" | [L] pedir ajuda a Layla")
+            }
             escreva("\n")
 
             cadeia escolher
@@ -172,15 +257,17 @@ programa {
             
             se (escolher == "A" ou escolher == "a") {
                 danoJogador = u.sorteia(10, 20)
+                
                 se (temBastao) {
-                    danoJogador += 5
+                    danoJogador += 15
                     escreverLento("Você usa o Bastão Lunar.\n")
                 }
                 vida_Harrow -= danoJogador
 
                 danoHarrow = u.sorteia(5, 10)
                 se (temArmadura) {
-                    danoHarrow -= 5
+                    danoHarrow -= 20
+                    
                     se (danoHarrow < 0) {
                         danoHarrow = 0
                     }
@@ -191,8 +278,9 @@ programa {
                 se (temChakram e chakramUsado == falso) {
                     escreverLento("Usar Chakram agora? (S/N)\n")
                     leia(simNao)
+                    
                     se (simNao == "S" ou simNao == "s") {
-                        vida_Harrow -= 30
+                        vida_Harrow -= 50
                         chakramUsado = verdadeiro
                         escreverLento("Chakram lançado! -30 de vida do inimigo.\n")
                     }
@@ -208,6 +296,7 @@ programa {
                 vidaJogador -= danoHarrow
                 escreva("Você se defende e recebe ", danoHarrow, " de dano. E Harrow recebe ", danoJogador, " de dano\n")
             } senao se (escolher == "T" e ajudaTawret) {
+            	
                 inteiro sorte = u.sorteia(1, 2)
                 se (sorte == 1) {
                     vidaJogador += 20
@@ -218,6 +307,21 @@ programa {
                 } senao {
                     escreverLento("Taweret bloqueia o ataque inimigo.\n")
                 }
+                usosTawreet = usosTawreet - 1
+                se(usosTawreet == 10){
+                	escreva("Tawreet esta cansada, portanto nao pode mais te ajudar")
+                }
+            }
+            se(escolher == "L" ou escolher == "l" e ajudaLayla){
+            	vida_Harrow = vida_Harrow - u.sorteia(10, 20)
+            	vidaJogador = vidaJogador - u.sorteia(3, 5)
+
+            	usosLayla = usosLayla - 1
+                se(usosLayla == 10){
+                	escreva("Layla esta cansada, portanto nao pode mais te ajudar")
+                }
+            	
+            	escreverLento("Layla aparece e golpeia Harrow!")
             }
 
             se (vida_Harrow < 0) { vida_Harrow = 0 }
@@ -237,6 +341,47 @@ programa {
 
     funcao missao_balanca() {
         escreverLento("\nVocê é levado à balança de Osíris...\n")
+        escreva("                                                                                                   \n")
+    escreva("                                             */ , . , /*                                            \n")
+    escreva("                                         *,,,(#/,...,/((,,,                                         \n")
+    escreva("                                       .,,,(*((((###(((/,(,,,                                       \n")
+    escreva("                                      # .*,,/           *,,(  (                                     \n")
+    escreva("                                        ,,.               .,*                                       \n")
+    escreva("                                        ..(               #..                                       \n")
+    escreva("                                      ,,* ,               , (,*                                     \n")
+    escreva("                                       *,/ *             ,.(,*                                      \n")
+    escreva("                                         *,*,.         .,*,,                                        \n")
+    escreva("                              ( .//(((/*.* %,,,,*   ,*,,,( / */(((/*  #                             \n")
+    escreva("                     ..*,. /((,,((((/((((( /(.(,,,(,,,(.#/ (((((/((((,*((* .**.                     \n")
+    escreva("                    ,,,,,*,/.....,,#*#,,..... (///////(......,,//*,*....,/,*,,,,,                   \n")
+    escreva("                            (*(....,.,....(    ,(*#/(,   .#....,.*....(,#                           \n")
+    escreva("                            ,.,/(#(,*.//       ,,/#(,*       (*.,,#%(*,                              \n")
+    escreva("              / / ,       ,,(.,,,.             ,,,(,,/            ,.,,.,(.,       , / #             \n")
+    escreva("             ,  **    ,*(  %%%%/                /,#,/                (%%%&  (,,   .**  ,            \n")
+    escreva("              (,(.**#                           /*///.                          #*/.(,#             \n")
+    escreva("                (                              .,,,..                             . #               \n")
+    escreva("                ,(                              /////.                            ,#,               \n")
+    escreva("               . (                             .*,...*                             # (              \n")
+    escreva("              ( .(                             ,//////                             *  (             \n")
+    escreva("             #  (*  %                          (*...,#                          /   #  (            \n")
+    escreva("            (   .    .                         (/**///                         ,    .   .           \n")
+    escreva("           ,    (     (                        //.../.                        /     (               \n")
+    escreva("                                               ,(*//(                        *      .               \n")
+    escreva("                                                /...(                                               \n")
+    escreva("                                                (///#                                               \n")
+    escreva("               #         #                      (...#                      ,      ,  .              \n")
+    escreva("               ,  ,       .                     #///#                     (       (  (              \n")
+    escreva("               (  (        (                    #.,.#                    *        (  ,        .     \n")
+    escreva("    /(         . /,         .                   #//*(                   /         .. #         #,   \n")
+    escreva("   ...,.*%/,,,((,,,,,,,,(%.,( ..                %*..#                 . ,.,%/,,,,,,,,(%,,,/%, ,...  \n")
+    escreva("      (//(##(/******/((##(//*                   %,#,/                   *//(##((/***,**/(##(///     \n")
+    escreva("                                                (,*,,                                               \n")
+    escreva("                                                .,/,                                               \n")
+    escreva("                                                 ,#,                                               \n")
+    escreva("                                                .,#*,                                               \n")
+    escreva("                                               ...*.,,                                              \n")
+    escreva("                                                . ...                                               \n")
+    
         u.aguarde(50)
 
         inteiro pontos = 0
@@ -288,6 +433,7 @@ programa {
         se (escolhaNumerica >= 0 e escolhaNumerica < 3) {
             vidaJogador += efeitosVida[escolhaNumerica]
             danoJogador += efeitosDano[escolhaNumerica]
+            
             escreverLento("Você atravessa a porta escolhida. Vida atual: " + vidaJogador + ", Dano permanente: " + danoJogador + "\n")
         } senao {
             escreverLento("Escolha inválida. Você fica no limbo, sua mente está em guerra. (-10 vida)\n")
