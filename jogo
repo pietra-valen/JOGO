@@ -154,6 +154,8 @@ programa {
         caminho_memorias()
         
         escreverLento("\nPronto para os desafios finais, você respira fundo e segue em direçao ao templo de Ammit.\n")  
+
+    		batalhaFinal()
     }
     
 
@@ -457,6 +459,133 @@ escreva("                                    \\/  \n")
     }
 
     funcao batalhaFinal(){
+    	escreverLento("Ao chegar no templo de Ammit ela diz: \n\n")
+    	escreverLento("-O julgamento será feito... e você será devorado.\n\n")
+    	escreverLento("Entao o Cavaleiro da Lua diz: -Eu não vou deixar você destruir tudo que eu amo.\n\n")
+    	escreverLento("-O passado não pode ser apagado, Cavaleiro da Lua. Diz Ammit.\n\n")
+    	escreverLento("Ammit ergue o cajado e lança uma rajada magica no Cavaleiro da Lua.\n\n")
+
+    	inteiro vidaAmmit = 400
+    	inteiro danoAmmit = u.sorteia(20, 30)
+
+    	vidaJogador -= danoAmmit
+
+    	escreva("Sua vida: ", vidaJogador, " | Dano do inimigo: ", danoAmmit, "\n")
+
+    	escreverLento("O Cavaleiro da Lua revida e da um golpe em Ammit.\n\n")
+
+    vidaAmmit -= danoJogador
+    escreva("Dano do Jogador: ", danoJogador, " | Vida do inimigo: ", vidaAmmit, "\n")
+
+    escreverLento("-Sua alma será minha refeição. Diz Ammit\n\n")
+    escreverLento("-Você não entende o que significa ser humano. Diz o Cavaleiro da Lua.\n\n")
+    escreverLento("[Eles colidem no ar, trocando golpes poderosos]\n\n")
+
+    enquanto(vidaJogador > 0 e vidaAmmit > 0){
     	
-    }
+    	 escreva("\nEscolha: [A] atacar | [D] defender")
+            se (ajudaTawret) { 
+                escreva(" | [T] pedir ajuda a Taweret")
+            }
+            senao se(ajudaLayla){
+            	escreva(" | [L] pedir ajuda a Layla")
+            }
+            escreva("\n")
+
+            cadeia escolher
+            leia(escolher)
+            
+            se (escolher == "A" ou escolher == "a") {
+                danoJogador = u.sorteia(10, 20)
+                
+                se (temBastao) {
+                    danoJogador += 15
+                    escreverLento("Você usa o Bastão Lunar.\n")
+                }
+                vidaAmmit -= danoJogador
+
+                se (temArmadura) {
+                    danoAmmit -= 20
+                    
+                    se (danoAmmit < 0) {
+                        danoAmmit = 0
+                    }
+                }
+                vidaJogador -= danoAmmit
+                escreva("Você recebe ", danoAmmit, " de dano. E Ammit recebe ", danoJogador, " de dano\n")
+
+                se (temChakram e chakramUsado == falso) {
+                    escreverLento("Usar Chakram agora? (S/N)\n")
+                    leia(simNao)
+                    
+                    se (simNao == "S" ou simNao == "s") {
+                        vidaAmmit -= 50
+                        chakramUsado = verdadeiro
+                        escreverLento("Chakram lançado! -30 de vida do inimigo.\n")
+                    }
+                }
+            } senao se (escolher == "D" ou escolher == "d") {
+                danoAmmit = u.sorteia(20, 30)
+                
+                se (temArmadura) {
+                    danoAmmit -= 20
+                    
+                    se (danoAmmit < 0) {
+                        danoAmmit = 0
+                    }
+                }
+                vidaJogador -= danoAmmit
+                escreva("Você se defende e recebe ", danoAmmit, " de dano. E Ammit recebe ", danoJogador, " de dano\n")
+            } senao se (escolher == "T" e ajudaTawret) {
+            	
+                inteiro sorte = u.sorteia(1, 2)
+                se (sorte == 1) {
+                    vidaJogador += 20
+                    se (vidaJogador > 300) {
+                        vidaJogador = 300
+                    }
+                    escreverLento("Taweret cura você! +20 vida.\n")
+                } senao {
+                    escreverLento("Taweret bloqueia o ataque inimigo.\n")
+                }
+                usosTawreet = usosTawreet - 1
+                se(usosTawreet == 10){
+                	escreva("Tawreet esta cansada, portanto nao pode mais te ajudar")
+                }
+            }
+            se(escolher == "L" ou escolher == "l" e ajudaLayla){
+            	
+            	vidaAmmit = vidaAmmit - u.sorteia(10, 30)
+
+            	usosLayla = usosLayla - 1
+                se(usosLayla == 10){
+                	escreva("Layla esta cansada, portanto nao pode mais te ajudar")
+                }
+            	
+            	escreverLento("Layla aparece e golpeia Harrow!")
+            }
+
+            se (vidaAmmit < 0) { 
+            	vidaAmmit = 0 
+            	}
+            	
+            se (vidaJogador < 0){ 
+            	vidaJogador = 0 
+            }
+            escreva("Sua vida: ", vidaJogador, " | Vida do inimigo: ", vidaAmmit, "\n")
+            u.aguarde(800)
+    		}
+
+    		escreverLento("[Ammit cai ferida no chao. Khonshu aparece atrás de Marc, imponente.]\n\n")
+    		escreverLento("Mesmo que me derrote... outro julgará em meu lugar... Diz Ammit\n\n")
+    		escreverLento("O Cavaleiro da Lua diz - Não hoje!\n\n")
+    		
+ 		escreva("  __  __ _____  _____ _____         ____     _____ ____  _   _  _____ _     _    _ _____ _____          \n")
+        escreva(" |  \\/  |_   _|/ ____/ ____|  /\\   / __ \\   / ____/ __ \\| \\ | |/ ____| |   | |  | |_   _|  __ \\   /\\    \n")
+        escreva(" | \\  / | | | | (___| (___   /  \\ | |  | | | |   | |  | |  \\| | |    | |   | |  | | | | | |  | | /  \\   \n")
+        escreva(" | |\\/| | | |  \\___ \\\\___ \\ / /\\ \\| |  | | | |   | |  | | . ` | |    | |   | |  | | | | | |  | |/ /\\ \\  \n")
+        escreva(" | |  | |_| |_ ____) |___) / ____ \\ |__| | | |___| |__| | |\\  | |____| |___| |__| |_| |_| |__| / ____ \\ \n")
+        escreva(" |_|  |_|_____|_____/_____/_/    \\_\\____/   \\_____\\____/|_| \\_|\\_____|______\\____/|_____|_____/_/    \\_\\\n")
+    		
+    	}
 }
