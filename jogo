@@ -1,3 +1,4 @@
+
 programa {
     inclua biblioteca Util --> u
     inclua biblioteca Texto --> t
@@ -68,9 +69,6 @@ programa {
         jogo_escolhas()
     }
 
-    // ----------------------
-    // Abertura cinematográfica (ASCII + sombreamento textual)
-    // ----------------------
     funcao abertura_cinematica() {
     escreva("\n")
     escreva("                                                                                                                                                      \n")
@@ -192,7 +190,7 @@ programa {
             
             batalhaFinal()
             
-            finais()
+            final()
             
         } senao {
             escreverLento("\nSua história terminou aqui...\n")
@@ -287,6 +285,7 @@ programa {
     // ----------------------
     funcao batalhaHarrow() {
         inteiro vida_Harrow = 65
+        inteiro danoHarrow = u.sorteia(8, 18)
 
         
         escreva("\nENCONTRO: ARTHUR HARROW\n")
@@ -344,7 +343,9 @@ programa {
                         escreverLento("Taweret cura você! +25 de vida.\n")
                         
                     } senao {
+                    	danoHarrow = 0
                         escreverLento("Taweret bloqueia o próximo ataque de Harrow.\n")
+                        
                     }
                     
                 } senao {
@@ -368,7 +369,7 @@ programa {
 
             // Ataque de Harrow (se ainda vivo)
             se (vida_Harrow > 0) {
-                inteiro danoHarrow = u.sorteia(8, 18)
+                
                 
                 // se jogador defendeu
                 se (escolher == "D" ou escolher == "d") {
@@ -501,6 +502,13 @@ programa {
                 memoriaCoragem = memoriaCoragem + 1
                 
                 escreverLento("Você enfrenta o que foi e se fortalece. Vida atual: " + vidaJogador + "\n")
+
+             se(escolhaNumerica == 2){
+             vidaJogador = vidaJogador + efeitosVida[escolhaNumerica]
+            
+            danoJogador = danoJogador + efeitosDano[escolhaNumerica]
+                }
+
                 
             } senao {
                 escreverLento("Você atravessa a lembrança. Vida atual: " + vidaJogador + "\n")
@@ -521,6 +529,7 @@ programa {
         inteiro vidaAmmit = 400
         inteiro danoAmmit = 30   // dano médio por ataque (positivo)
         logico laylaCurou = falso
+        inteiro danoRecebido = u.sorteia(20, danoAmmit) // danoAmmit = 30 base
 
         
         escreva("AMMIT: A DEUSA DEVORADORA\n")
@@ -580,7 +589,10 @@ programa {
                 escreva("Você causa ", danoJogador, " de dano.\n")
             }
             senao se (escolher == "D" ou escolher == "d") {
-                escreverLento("Você se prepara para absorver o golpe — defesa aumentada neste turno.\n")
+            	
+               escreverLento("Você se prepara para absorver o golpe — defesa aumentada neste turno.\n")
+
+               danoRecebido = 0
             }
             
             senao se (escolher == "T" e ajudaTaweret) {
@@ -589,14 +601,17 @@ programa {
                     inteiro sorte = u.sorteia(1, 2)
                     
                     se (sorte == 1) {
-                        vidaJogador = vidaJogador + 35
+                        vidaJogador = vidaJogador + 55
                         
-                        se (vidaJogador > 300) { vidaJogador = 300 }
-                        escreverLento("Taweret derrama bênçãos: +35 vida.\n")
+                        se (vidaJogador > 300) { 
+                        	vidaJogador = 300 
+                        	}
+                        escreverLento("Taweret derrama bênçãos: +55 vida.\n")
                         
                     } senao {
                     	
                         escreverLento("Taweret convoca uma barreira e bloqueia parte do dano.\n")
+                        danoRecebido = 0
                     }
                     
                 } senao {
@@ -623,17 +638,19 @@ programa {
 
             // Ammit ataca (se ainda viva)
             se (vidaAmmit > 0) {
-                inteiro danoRecebido = u.sorteia(20, danoAmmit) // danoAmmit = 30 base
+                
                 
                 // se o jogador escolheu defender, reduz
-                se (escolher == "D" ou escolher == "d") {
-                    danoRecebido = danoRecebido / 2
+               
                 }
                 // Armadura reduz
                 se (temArmadura) {
                     danoRecebido = danoRecebido - 15
                 }
-                se (danoRecebido < 0) { danoRecebido = 0 }
+                se (danoRecebido < 0) { 
+                	danoRecebido = 0 
+                	}
+                	
                 vidaJogador = vidaJogador - danoRecebido
                 escreva("Ammit investe e causa ", danoRecebido, " de dano.\n")
 
@@ -662,29 +679,12 @@ programa {
             	}
             se (vidaJogador < 0) { 
             	vidaJogador = 0 
-
-    escreva("████████▄     ▄████████    ▄████████    ▄████████  ▄██████▄      ███        ▄████████ \n")
-    escreva("███   ▀███   ███    ███   ███    ███   ███    ███ ███    ███ ▀█████████▄   ███    ███ \n")
-    escreva("███    ███   ███    █▀    ███    ███   ███    ███ ███    ███    ▀███▀▀██   ███    ███ \n")
-    escreva("███    ███  ▄███▄▄▄      ▄███▄▄▄▄██▀  ▄███▄▄▄▄██▀ ███    ███     ███   ▀   ███    ███ \n")
-    escreva("███    ███ ▀▀███▀▀▀     ▀▀███▀▀▀▀▀   ▀▀███▀▀▀▀▀   ███    ███     ███     ▀███████████ \n")
-    escreva("███    ███   ███    █▄  ▀███████████ ▀███████████ ███    ███     ███       ███    ███ \n")
-    escreva("███   ▄███   ███    ███   ███    ███   ███    ███ ███    ███     ███       ███    ███ \n")
-    escreva("████████▀    ██████████   ███    ███   ███    ███  ▀██████▀     ▄████▀     ███    █▀  \n")
-    escreva("                          ███    ███   ███    ███                                           \n")
             	}
 
             escreva("Status — Sua vida: ", vidaJogador, " | Vida de Ammit: ", vidaAmmit, "\n")
             u.aguarde(800)
-        }
-
-        // Resultado já será tratado na função finais()
     }
-
-    // ----------------------
-    // Finais variados e final secreto (elemento surpresa)
-    // ----------------------
-    funcao finais() {
+    funcao final() {
         
         se (vidaJogador <= 0) {
         	
@@ -702,7 +702,6 @@ programa {
     escreverLento("\n Sua jornada termina nas garras de Ammit. A balança pesa a sua alma.\n")
     
     escreva("\nFim trágico.\n")
-            
         }
 
         
@@ -710,21 +709,21 @@ programa {
         u.aguarde(600)
 
         // Final se Taweret / Layla / sozinho / Khonshu
-        se (ajudaTaweret) {
+        se (ajudaTaweret e vidaJogador > 0) {
         	
             escreverLento("\nTaweret sorri: as águas curam o que foi ferido. Você retorna ao mundo dos vivos com compaixão restaurada.\n")
             escreva("\nFinal: O Guardião Compassivo\n")
             
-        } senao se (ajudaLayla) {
+        } senao se (ajudaLayla e vidaJogador > 0) {
         	
             escreverLento("\nLayla segura sua mão nas ruínas do templo. Vocês caminham para proteger os inocentes.\n")
             escreva("\nFinal: Parceiros da Aurora\n")
             
-        } senao se (ajudadoPorKhonshu) {
+        } senao se (ajudadoPorKhonshu e vidaJogador > 0) {
             escreverLento("\nKhonshu sussurra nas sombras. Seu poder aumentou, mas agora sua liberdade pertence ao deus.\n")
             escreva("\nFinal: O Avatar Noturno (um preço foi pago)\n")
             
-        } senao {
+        } senao se(vidaJogador > 0){
         	
             escreverLento("\nSozinho, você derrota Ammit — mas seu nome se perde entre as areias e memórias.\n")
             escreva("\nFinal: O Cavaleiro Solitário\n")
@@ -732,7 +731,7 @@ programa {
 
         // Final secreto (elemento surpresa):
         
-        se ((pontosBalanca >= 2 e memoriaCoragem >= 1) ou (vidaJogador >= 250)) {
+        se ((pontosBalanca >= 2 e memoriaCoragem >= 1) ou (vidaJogador >= 0)) {
             u.aguarde(700)
             
             escreverLento("\nUm brilho intenso envolve o templo... Khonshu ajoelha-se perante você.\n")
@@ -741,30 +740,64 @@ programa {
             u.aguarde(600)
 
             escreva("\n")
-            escreva("      .-''''-.\n")
-            escreva("     /  .--.  \\\n")
-            escreva("    /  /    \\  \\\n")
-            escreva("    |  |    |  |\n")
-            escreva("    |  |.-\"\"-.|\n")
-            escreva("   ///`.::::.`\\\\\\\n")
-            escreva("  ||| ::/  \\:: ;|\n")
-            escreva("  ||; ::\\__/:: ;|\n")
-            escreva("   \\\\\\'::::'///\n")
-            escreva("    `=':-..-'`\n")
+        escreva("                                 @@@@@@@@@@@@@@@@@@@@@@@@@\n")
+        escreva("                             @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n")
+        escreva("                           @@@@@@@@@@@@@          @@@@@@@@@@@@@\n")
+        escreva("                         @@@@@@@@@@                    @@@@@@@@@@\n")
+        escreva("                        @@@@@@@@                          @@@@@@@@@\n")
+        escreva("                      @@@@@@@@                              @@@@@@@@\n")
+        escreva("                      @@@@@@@          @@@@@@@@@@@@@          @@@@@@@\n")
+        escreva("                    @@@@@@@@        @@@@@@@@@@@@@@@@@@@        @@@@@@@\n")
+        escreva("                   @@@@@@@        @@@@@@@@@@@@@@@@@@@@@@        @@@@@@@\n")
+        escreva("                   @@@@@@        @@@@@@@@        @@@@@@@@        @@@@@@\n")
+        escreva("                  @@@@@@@       @@@@@@@            @@@@@@@@      @@@@@@@\n")
+        escreva("                  @@@@@@@      @@@@@@@               @@@@@@       @@@@@@\n")
+        escreva("                  @@@@@@      @@@@@@@                 @@@@@@      @@@@@@\n")
+        escreva("                  @@@@@@      @@@@@@                  @@@@@@      @@@@@@\n")
+        escreva("                  @@@@@@      @@@@@@                  @@@@@@      @@@@@@\n")
+        escreva("                  @@@@@@      @@@@@@                  @@@@@@      @@@@@@\n")
+        escreva("                  @@@@@@      @@@@@@                  @@@@@@@@@@@@@@@@@@\n")
+        escreva("                  @@@@@@      @@@@@@                   @@@@@@@@@@@@@@@@\n")
+        escreva("                  @@@@@@      @@@@@@                     @@@@@@@@@@@@\n")
+        escreva("                  @@@@@@      @@@@@@                         @@@@\n")
+        escreva("                  @@@@@@      @@@@@@\n")
+        escreva("                  @@@@@@      @@@@@@\n")
+        escreva("                  @@@@@@      @@@@@@\n")
+        escreva("            @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n")
+        escreva("           @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n")
+        escreva("         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n")
+        escreva("        @@@@@@@@                                                           @@@@@@@\n")
+        escreva("        @@@@@@                                                              @@@@@@\n")
+        escreva("        @@@@@@                           @@@@@@@@                           @@@@@@\n")
+        escreva("        @@@@@@                        @@@@@@@@@@@@@@                        @@@@@@\n")
+        escreva("        @@@@@@                      @@@@@@@@@@@@@@@@@@                      @@@@@@\n")
+        escreva("        @@@@@@                     @@@@@@@@@  @@@@@@@@@                     @@@@@@\n")
+        escreva("        @@@@@@                    @@@@@@@        @@@@@@@                    @@@@@@\n")
+        escreva("        @@@@@@                   @@@@@@@          @@@@@@@                   @@@@@@\n")
+        escreva("        @@@@@@                   @@@@@@            @@@@@@                   @@@@@@\n")
+        escreva("        @@@@@@                   @@@@@@@          @@@@@@@                   @@@@@@\n")
+        escreva("        @@@@@@                    @@@@@@@         @@@@@@                    @@@@@@\n")
+        escreva("        @@@@@@                     @@@@@@@      @@@@@@@@                    @@@@@@\n")
+        escreva("        @@@@@@                      @@@@@@@    @@@@@@@@                     @@@@@@\n")
+        escreva("        @@@@@@                       @@@@@@    @@@@@@                       @@@@@@\n")
+        escreva("        @@@@@@                       @@@@@@    @@@@@@                       @@@@@@\n")
+        escreva("        @@@@@@                       @@@@@@    @@@@@@                       @@@@@@\n")
+        escreva("        @@@@@@                       @@@@@@    @@@@@@                       @@@@@@\n")
+        escreva("        @@@@@@                       @@@@@@    @@@@@@                       @@@@@@\n")
+        escreva("        @@@@@@                       @@@@@@@@@@@@@@@@                       @@@@@@\n")
+        escreva("        @@@@@@                       @@@@@@@@@@@@@@@@                       @@@@@@\n")
+        escreva("        @@@@@@                       @@@@@@@@@@@@@@@@                       @@@@@@\n")
+        escreva("        @@@@@@                        @@@@@@@@@@@@@@                        @@@@@@\n")
+        escreva("        @@@@@@                                                              @@@@@@\n")
+        escreva("        @@@@@@@@                                                           @@@@@@@\n")
+        escreva("         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n")
+        escreva("           @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n")
+        escreva("            @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n\n")
+ 
             escreverLento("\nFINAL SECRETO DESBLOQUEADO: Cavaleiro da Lua Supremo — você transcendeu o avatar e tornou-se lenda.\n")
             escreva("\nSua apresentação termina com uma reverência final do próprio Khonshu.\n")
         }
 
         escreverLento("\nParabéns — sua jornada inspirará histórias nas esquinas da cidade.\n")
-
-        escreva("   ▄▄▄▄███▄▄▄▄    ▄█     ▄████████    ▄████████    ▄████████  ▄██████▄        ▄████████  ▄██████▄    ▄▄▄▄███▄▄▄▄      ▄███████▄  ▄█          ▄████████     ███        ▄████████ \n")
-	   escreva(" ▄██▀▀▀███▀▀▀██▄ ███    ███    ███   ███    ███   ███    ███ ███    ███      ███    ███ ███    ███ ▄██▀▀▀███▀▀▀██▄   ███    ███ ███         ███    ███ ▀█████████▄   ███    ███ \n")
-	   escreva(" ███   ███   ███ ███▌   ███    █▀    ███    █▀    ███    ███ ███    ███      ███    █▀  ███    ███ ███   ███   ███   ███    ███ ███         ███    █▀     ▀███▀▀██   ███    ███ \n")
-	   escreva(" ███   ███   ███ ███▌   ███          ███          ███    ███ ███    ███      ███        ███    ███ ███   ███   ███   ███    ███ ███        ▄███▄▄▄         ███   ▀   ███    ███ \n")
-	   escreva(" ███   ███   ███ ███▌ ▀███████████ ▀███████████ ▀███████████ ███    ███      ███        ███    ███ ███   ███   ███ ▀█████████▀  ███       ▀▀███▀▀▀         ███     ▀███████████ \n")
-	   escreva(" ███   ███   ███ ███           ███          ███   ███    ███ ███    ███      ███    █▄  ███    ███ ███   ███   ███   ███        ███         ███    █▄      ███       ███    ███ \n")
-	   escreva(" ███   ███   ███ ███     ▄█    ███    ▄█    ███   ███    ███ ███    ███      ███    ███ ███    ███ ███   ███   ███   ███        ███▌    ▄   ███    ███     ███       ███    ███ \n")
-	   escreva("  ▀█   ███   █▀  █▀    ▄████████▀   ▄████████▀    ███    █▀   ▀██████▀       ████████▀   ▀██████▀   ▀█   ███   █▀   ▄████▀      █████▄▄██   ██████████    ▄████▀     ███    █▀  \n")
-	   escreva("                                                                                                                                ▀")
     }
 }
