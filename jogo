@@ -15,11 +15,11 @@ programa {
     // Ajudas / Companhia
     logico ajudadoPorKhonshu = falso
     logico ajudaLayla = falso
-    logico ajudaTawret = falso
+    logico ajudaTaweret = falso
 
     // Recursos de suporte
     inteiro usosLayla = 10         
-    inteiro usosTawreet = 10      
+    inteiro usosTaweret = 10      
 
     // Vida e dano (valores base)
     inteiro vidaJogador = 300
@@ -238,7 +238,7 @@ programa {
 
         se (escolhaNumerica == 0) {
         	
-            ajudaTawret = verdadeiro
+            ajudaTaweret = verdadeiro
             companhiaEscolhida = "Taweret"
             escreverLento("Taweret se junta a você. Sua presença é calma e protetora.\n")
             
@@ -296,7 +296,7 @@ programa {
         	
             escreva("\nSua vida: ", vidaJogador, " | Vida de Harrow: ", vida_Harrow, "\n")
             escreva("Escolha: [A] atacar | [D] defender")
-            se (ajudaTawret) { escreva(" | [T] pedir ajuda a Taweret") }
+            se (ajudaTaweret) { escreva(" | [T] pedir ajuda a Taweret") }
             se (ajudaLayla) { escreva(" | [L] pedir ajuda a Layla") }
             escreva("\n")
             
@@ -329,9 +329,9 @@ programa {
             senao se (escolher == "D" ou escolher == "d") {
                 escreverLento("Você se posiciona para defender; redução de dano neste turno.\n")
             }
-            senao se (escolher == "T" e ajudaTawret) {
-                se (usosTawreet > 0) {
-                    usosTawreet = usosTawreet - 1
+            senao se (escolher == "T" e ajudaTaweret) {
+                se (usosTaweret > 0) {
+                    usosTaweret = usosTaweret - 1
                     inteiro sorte = u.sorteia(1, 2)
                     
                     se (sorte == 1) {
@@ -543,7 +543,7 @@ programa {
 
             escreva("Escolha: [A] atacar | [D] defender")
             
-            se (ajudaTawret) { 
+            se (ajudaTaweret) { 
             	
             	escreva(" | [T] pedir ajuda a Taweret") 
             	
@@ -583,9 +583,9 @@ programa {
                 escreverLento("Você se prepara para absorver o golpe — defesa aumentada neste turno.\n")
             }
             
-            senao se (escolher == "T" e ajudaTawret) {
-                se (usosTawreet > 0) {
-                    usosTawreet = usosTawreet - 1
+            senao se (escolher == "T" e ajudaTaweret) {
+                se (usosTaweret > 0) {
+                    usosTaweret = usosTaweret - 1
                     inteiro sorte = u.sorteia(1, 2)
                     
                     se (sorte == 1) {
@@ -710,7 +710,7 @@ programa {
         u.aguarde(600)
 
         // Final se Taweret / Layla / sozinho / Khonshu
-        se (ajudaTawret) {
+        se (ajudaTaweret) {
         	
             escreverLento("\nTaweret sorri: as águas curam o que foi ferido. Você retorna ao mundo dos vivos com compaixão restaurada.\n")
             escreva("\nFinal: O Guardião Compassivo\n")
