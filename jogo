@@ -1,107 +1,79 @@
-
 programa {
     inclua biblioteca Util --> u
     inclua biblioteca Texto --> t
 
+    // ----------------------
+    // Variáveis globais
+    // ----------------------
     // Inventário e Status
-    logico temArmadura = falso // defesa = 20
-    logico temBastao = falso
-    logico temChakram = falso
+    logico temArmadura = falso    // reduz dano recebido em  15
+    logico temBastao = falso      // aumenta dano de ataque
+    logico temChakram = falso     // ataque único poderoso
     logico chakramUsado = falso
     logico pergaminho = falso
 
-    // Vida e danos
-    inteiro vidaJogador = 300
-    inteiro danoJogador = u.sorteia(10, 20)
+    // Ajudas / Companhia
     logico ajudadoPorKhonshu = falso
     logico ajudaLayla = falso
     logico ajudaTawret = falso
-    
-    // Variáveis auxiliares
-    cadeia simNao
-    cadeia companhia
-    inteiro escolhaNumerica
-    inteiro usosLayla = 10
-    inteiro usosTawreet = 10
 
+    // Recursos de suporte
+    inteiro usosLayla = 10         
+    inteiro usosTawreet = 10      
+
+    // Vida e dano (valores base)
+    inteiro vidaJogador = 300
+    inteiro danoJogador = 15      
+    
+
+    // Controle e pontuações para finais secretos
+    inteiro pontosBalanca = 0     // usado para final secreto
+    inteiro memoriaCoragem = 0    // quantas escolhas corajosas nas memórias
+
+    // Auxiliares
+    cadeia simNao
+    inteiro escolhaNumerica
+    cadeia escolher
+    cadeia personagemEscolhido
+    cadeia companhiaEscolhida
+
+    // ----------------------
+    // Funções utilitárias
+    // ----------------------
+    
+    funcao escreverLento(cadeia palavra) {
+        inteiro quant = t.numero_caracteres(palavra)
+        para (inteiro i = 0; i < quant; i++) {
+            escreva(t.obter_caracter(palavra, i))
+            u.aguarde(8)
+        }
+    }
+
+    funcao pausaCurta() {
+        u.aguarde(600)
+    }
+
+    // ----------------------
+    // Início do jogo
+    // ----------------------
+    
     funcao inicio() {
-    	
+       
+        abertura_cinematica()
+        
         introducao_historia()
+        
         limpa()
         
         jogo_escolhas()
     }
 
-    funcao introducao_historia() {
-    	
-    escreva("  ____ _____ ___  _______  |  |   ____ |__|______  ____     __| _/____    |  |  __ _______   \n")
-    escreva("_/ ___\\\\__  \\\\  \\/ /\\__  \\ |  | _/ __ \\|  \\_  __ \\/  _ \\   / __ |\\__  \\   |  | |  |  \\__  \\  \n")
-    escreva("\\  \\___ / __ \\\\   /  / __ \\|  |_\\  ___/|  ||  | \\(  <_> ) / /_/ | / __ \\_ |  |_|  |  // __ \\_\n")
-    escreva(" \\___  >____  /\\_/  (____  /____/\\___  >__||__|   \\____/  \\____ |(____  / |____/____/(____  / \n")
-    escreva("     \\/     \\/           \\/          \\/                        \\/     \\/                  \\/ \n\n")
-
-        escreverLento("Você é Marc Spector, um homem atormentado por múltiplas personalidades – Steven, Jake e ele mesmo.\n")
-        escreverLento("Morto em combate, foi trazido de volta à vida como o avatar do deus egípcio Khonshu, tornando-se o Cavaleiro da Lua.\n\n")
-        escreverLento("Khonshu o envia em uma missão urgente: impedir que a deusa Ammit desperte e julgue toda a humanidade antes mesmo que os crimes aconteçam.\n\n")
-
-        u.aguarde(9000)
-    }
-
-    funcao jogo_escolhas() {
-        cadeia escolher
-        escreverLento("\nKhonshu surge no reflexo rachado do espelho, seu rosto esquelético se projetando.\n\n")
-        escreva(",,...                       ....... ......................,,,,,,,,,,,,,#(#,,,,,,,,,,,,,,,(%##%,,,,,,\n")
-    escreva("........          ...   ...........................,....,,,,,,,,,,,,,,,,#%%(,,,,,,,,,,,,(#%(%#,,,,,,\n")
-    escreva(".............................,,,,,,,...,,,......,,,,,,,,,,,,,,,,,,,,,,,,,##%%%*,,,,,,/(#%%%/#*,,,,,,\n")
-    escreva(",,,,,,,,,,,,,,,........,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#%#%#%%%###%%%%%%%,,,,,,,\n")
-    escreva(",,,,,,,,,,,,,,,,.,,,..,,,,,,,.........  .. ..,,,,,,.    ,,,,,,,,,,,,,,,,,,,,*%#%&%#%%&&%#%#&,,,,,,,,\n")
-    escreva(".,,,,,,,,,,,,,,,,,,,,,,,,,,..             /# ,     ,. &&&&&,,,,,,,,,,,,,,,,,,,,#&&&##%%%%%%/,,,,,,,,\n")
-    escreva("..,,,,,.,,,,,,,,,,,,,,,,...              &&&     ..  %@@@&&&&,,,,,,,,,,,,,,,,,,,%%%%&%%#/&#,,,,,,,,,\n")
-    escreva(".........,,,,,,,,,,,,,,.....             &&@#  *,.*(%&&&@&&&&(,,,,,,,,,,,,,,,,,,,*&&*%&*##%,,,,,,,,,\n")
-    escreva("...........,,,,,.,,,,,,.....            .(,*,..,,./,/,(&.*/*/&,...................((//#&#%.,,,,,,,,,\n")
-    escreva("...................,,,....            ...,/. ..,,. *..#((((/*....         ....... #%#&@&#,...,,,,,,\n")
-    escreva("..........................         ......(%%.,#%&(*&.(.*.//***..   ......        ,%&&%%%#..,,,,,,,,\n")
-    escreva("....  ................             ......., .*&&@&,*&&/*../,...    ..       ......*(%&%%/......,,,,\n")
-    escreva("..             ...........       ........  ..,%%#,.,,.*/(#...... ..   ............,//((((.,,,.......\n")
-    escreva("                  ......................  ..***....,/#((@&&&(#**............,.....,/#%&%#..,,,,,....\n")
-    escreva("                   ..................... ..,/,*,,(#%@@@@@@@@@@%(*/*,.............../##%%%...........\n")
-    escreva("                 .  ............. ..... ,*,,/(/&@@@@@@@@@@@@@%@@(//(**..,..........,#####,..........\n")
-    escreva("                        ........... ..,.**//%%&@@@@@@@@@@@@@&@@&#(#/(**/,*,,.*......(%&##/..........\n")
-    escreva("                      ............../,.,/((&##&@&%@@@@@@&&@@@&%&&((/%(//(/(/,,...*.,#&(###..........\n")
-    escreva("                ..............  .*,*%#(/((###%%#%&%%%%%%%&@&%%&&&#((#///(((*//*/**#((((###..........\n")
-    escreva(" ......         ....      . ...,/(/##*&((((/#@%%&%#%&&&&%&%&%%%&&%(((((/(((///(/%%((#/.,*,..........\n")
-    escreva("..............   .... ,   ..,.**,(##*%%#&##(@&%%&%&&%&&&%%&&%&&&&%###((/(((//(#%#(/,#&,.**#//.....  \n")
-    escreva(".............     ..  ...../####(##/%%(#%(%&%&%%%%%%%%%&&&%%%%%%&%#(%(#(((///((((///((*,//(###.     \n")
-    escreva("   ..... ..    *.,**/((((((((##&%((%&#%%%%%%#&%%####@&(#%%%%%%@@&@###%/(((((#((/####((%(##(%%#      \n")
-    escreva("       ,*,.,*../ . ,./######%%%#((%&%#(%#%%&&#%###%((###%#%&@@&%%%%##%%(((((((/((*,,,*&&&&&%##(     \n")
-    escreva("    ,(*/(//#(///.. ,.,,./(.....(#%&%&##%&&%&&#&#%#(((###%@&&&&&&&%%%%%#@(((((((/((((#(%%&%%&%%#(  ..\n")
-    escreva("     ...,#/%&&%&%&#/#(///,.,,.%%%&%%(%%@@&&&&%&%#(#%%%%@&&&&&&%&%&&@%#%(&((#(((/(%##(#/#%&&&&&%%,...\n")
-    escreva("   ...,**//.*/%%&%###/((/(/((*%%&&#%%&&&@@&&&%%%%%#%&&@&&&&%&%&&&&&&&@%%#&#(#(((((#&%(#(%%%%%&&%%#...\n")
-    escreva(" .. ..,//((##(/#%#%#%%#(#(*##(//(%%%&&&@@@@@&&%%%%&&&%%@&&&&&&&%&&&@@&%#@((#((((/(&&&&&%#&%&%%%%#/..\n")
-    escreva("  .**,**/(((((####%%%#(%#%%%#(//,%&&&@&@@@@@@@&&&@@&&&&&&&&&&@&&&&&@@@%#@##(#((#((./&&%##%%&%%%%%...\n")
-    escreva("  .((((((####%##%%%%%%%#%#(#/%(/#(,,(&@&@@@&#%@&#(,#/@@%%&&&&&&&&&@@@@%#@@(##/(#(#%    ,##&&&%%%....\n")
-    escreva("    ,*/((((((#%&%%%&%%%%%%#%#(%#(#(((((((/&(#*/***/%(#(#@#%%%&&&&@@@@@@#@@(##(##((#   ..##%%%%%   ..\n")
-    escreva("   .(**,,,/(%%#%%&%&%%%%%%%%%%(###/(((/(###%#%/(/#&&(&#(@%%&&&%&@&&&&&&%&@((#((#(((/ .../#%%%     ..\n")
-    escreva("    ,//((/((//(&%. (%%%%%%%######((#(((**/(#/%&@&%#%/%%%%%#%&&@&%%&%&&@%&@@(#(#%(((# ... ##%%    ...\n")
-    escreva("    ,/(((((///((#      %%%#%%%%###%%%%#(/#((#%///(//(/#(&%@&%%(/((%(%&@&%@@#(((#(/((.....%#%##......\n")
-    escreva("    ./*//(%#((((##     %%&%%%%%%%%%%%%##(##(#//(((/(/%(&%%%(%**,,*///(&#(&&(###%#//(.   .#%%%%......\n")
-    escreva("    .*(/(#//((#%(#.    &%&&%&&&%%%%%%%%####%#/(/////%(%%%%*/*,*,,**,,/#%#&&(##%#((///   .*#%%%......\n\n")
-        
-        escreverLento("(A)ceitar ou (R)esistir?\n")
-        leia(escolher)
-
-        se (escolher == "A" ou escolher == "a") {
-            ajudadoPorKhonshu = verdadeiro
-            escreverLento("Khonshu sorri, aprovando sua decisão.\n")
-        } senao {
-            escreverLento("Você resiste, mas Khonshu o força. Você sente dor (-10 vida).\n")
-            vidaJogador -= 10
-        }
-        
-        
-        escolha_personalidade()
-
- escreva("                                                                                                                                                      \n")
+    // ----------------------
+    // Abertura cinematográfica (ASCII + sombreamento textual)
+    // ----------------------
+    funcao abertura_cinematica() {
+    escreva("\n")
+    escreva("                                                                                                                                                      \n")
     escreva("                                                             (@            @/                                                                         \n")
     escreva("                                                         @(                     #*                                                                    \n")
     escreva("                                                      @                            ,(                                                                 \n")
@@ -138,463 +110,661 @@ programa {
     escreva("              @  *.@     %                  %/  @@,   #.     @   @/ .@#                     .@                        .@&@@@@@@              @/       \n")
     escreva("               &  *   %       ,@.          @      /      @,% .( @.   %*           #@*                         .@@/&    &         (@      (     @      \n")
     escreva("            ,,.   @             @  ,/&          &     @.(/ .@  (%.       %                             .@@@ (   (         *  ,%    @@           @     \n\n")
+        escreva("\n\n")
         
+    escreva("                 ____ _____ ___  _______  |  |   ____ |__|______  ____     __| _/____    |  |  __ _______   \n")
+    escreva("               _/ ___\\\\__  \\\\  \\/ /\\__  \\ |  | _/ __ \\|  \\_  __ \\/  _ \\   / __ |\\__  \\   |  | |  |  \\__  \\  \n")
+    escreva("               \\  \\___ / __ \\\\   /  / __ \\|  |_\\  ___/|  ||  | \\(  <_> ) / /_/ | / __ \\_ |  |_|  |  // __ \\_\n")
+    escreva("                \\___  >____  /\\_/  (____  /____/\\___  >__||__|   \\____/  \\____ |(____  / |____/____/(____  / \n")
+    escreva("                    \\/     \\/           \\/          \\/                        \\/     \\/                  \\/ \n\n")
+
+        escreverLento("...Nas sombras da cidade, a lua observa. Um homem dividido caminha entre julgamento e redenção.\n")
+        u.aguarde(1400)
+        escreverLento("Prepare-se: esta é a história do Cavaleiro da Lua.\n")
+        u.aguarde(1200)
+    }
+
+    // ----------------------
+    // Introdução narrativa
+    // ----------------------
+    funcao introducao_historia() {
         
+        escreverLento("Você é Marc Spector — três faces, uma missão. Khonshu o tocou e você renasceu para proteger a humanidade.\n")
+        u.aguarde(800)
+        escreverLento("Mas a deusa Ammit pretende julgar todos antes mesmo que o crime aconteça. Você deve impedi-la.\n\n")
+        u.aguarde(900)
+
+        
+        escreverLento("Podemos começar a aventura? [0 começar / 1 desistir]")
+        inteiro comecar
+        leia(comecar)
+        escolha(comecar){
+
+        	caso 1:
+        		se(comecar == 0){
+        			jogo_escolhas()
+        			
+        		} senao {
+        			
+        			pare
+        		}
+        }
+    }
+
+    // ----------------------
+    // Sequência de escolhas (espelho + personalidade + companhia)
+    // ----------------------
+    funcao jogo_escolhas() {
+        escreverLento("Khonshu surge no reflexo rachado do espelho: sua voz ecoa como trovão.\n")
+        u.aguarde(600)
+        escreverLento("[A]ceitar o chamado ou [R]esistir?\n")
+        leia(escolher)
+
+        se (escolher == "A" ou escolher == "a") {
+            ajudadoPorKhonshu = verdadeiro
+            escreverLento("Você aceita. Khonshu toca sua fronte — sente o peso do dever.\n")
+        } senao {
+            escreverLento("Você resiste. Khonshu não desiste: uma dor o atravessa (-10 vida).\n")
+            vidaJogador = vidaJogador - 10
+        }
+
+        u.aguarde(500)
+        escolha_personalidade()
+
+        escreva("\n")
         escolha_companhia()
-        
+
+        u.aguarde(500)
         caminho_itens()
-        
-        escreverLento("\nVocê segue em frente, mas no meio do caminho encontra Arthur Harrow, o avatar de Ammit...\n")
-        
+
+        escreva("\nVocê segue em frente, as areias uivam. No caminho, a figura de Arthur Harrow aparece...\n")
+        u.aguarde(800)
         batalhaHarrow()
 
-        escreverLento("\nApós derrotar Harrow, seu corpo está exausto, mas a missão ainda não terminou...\n")
-        
-        missao_balanca()
-        
-        caminho_memorias()
-        
-        escreverLento("\nPronto para os desafios finais, você respira fundo e segue em direçao ao templo de Ammit.\n")  
-
-    		batalhaFinal()
+        se (vidaJogador > 0) {
+            escreverLento("\nApós a luta, você avança para o local do julgamento.\n")
+            
+            missao_balanca()
+            
+            caminho_memorias()
+            
+            escreverLento("\nPronto para o confronto final, você vai em direção ao templo de Ammit.\n")
+            
+            batalhaFinal()
+            
+            finais()
+            
+        } senao {
+            escreverLento("\nSua história terminou aqui...\n")
+        }
     }
-    
 
+    // ----------------------
+    // Escolha de personalidade
+    // ----------------------
     funcao escolha_personalidade() {
         cadeia personagens[3] = {"Marc Spector", "Steven Grant", "Jake Lockley"}
-        inteiro escolhaNumerica
 
-        escreverLento("Escolha com qual personalidade deseja seguir: \n")
+        escreverLento("\nEscolha com qual personalidade deseja seguir:\n")
         para (inteiro i = 0; i < 3; i++) {
             escreva("[", i, "] ", personagens[i], "\n")
         }
-        
-        leia(escolhaNumerica)
 
+        leia(escolhaNumerica)
         se (escolhaNumerica == 0) {
-            escreverLento("Você escolheu Marc Spector o guerreiro!\n")
+            personagemEscolhido = "Marc Spector"
+            escreverLento("Você assume Marc: força, experiência de combate.\n")
         } senao se (escolhaNumerica == 1) {
-            escreverLento("Você escolheu Steven Grant da loja de presentes!\n")
+            personagemEscolhido = "Steven Grant"
+            escreverLento("Você assume Steven: astúcia, empatia.\n")
         } senao se (escolhaNumerica == 2) {
-            escreverLento("Você escolheu Jake Lockley o taxista!\n")
+            personagemEscolhido = "Jake Lockley"
+            escreverLento("Você assume Jake: contato com as ruas, sangue frio.\n")
         } senao {
-            escreverLento("Escolha inválida. Seguindo com Marc Spector.\n")
+            personagemEscolhido = "Marc Spector"
+            escreverLento("Entrada inválida. Marc toma controle por padrão.\n")
         }
     }
-    
+
+    // ----------------------
+    // Escolha de companhia
+    // ----------------------
     funcao escolha_companhia() {
-        cadeia companhias[3] = {"Taweret - pode te curar", "Layla - ajuda em combate", "Seguir sozinho - sem beneficios"}
-
         escreva("\nEscolha sua companhia:\n")
-        para (inteiro i = 0; i < 3; i++) {
-            escreva("[", i, "] ", companhias[i], "\n")  
-        }
-
+        escreva("[0] Taweret - poder de cura (ajuda defensiva)\n")
+        escreva("[1] Layla - parceira de combate (dano aliado)\n")
+        escreva("[2] Seguir sozinho - nenhum benefício externo\n")
         leia(escolhaNumerica)
 
         se (escolhaNumerica == 0) {
+        	
             ajudaTawret = verdadeiro
-            escreverLento("Taweret se junta a você e voces seguem juntos na joranada.\n")
+            companhiaEscolhida = "Taweret"
+            escreverLento("Taweret se junta a você. Sua presença é calma e protetora.\n")
+            
         } senao se (escolhaNumerica == 1) {
+        	
             ajudaLayla = verdadeiro
-            escreverLento("Layla se junta a você e voces seguem juntos na joranada.\n")
+            companhiaEscolhida = "Layla"
+            escreverLento("Layla oferece apoio. Seu cuidado é feroz.\n")
+            
         } senao {
-            escreverLento("Você segue sozinho.\n")
+        	
+            companhiaEscolhida = "Sozinho"
+            escreverLento("Você segue sozinho. A responsabilidade é toda sua.\n")
         }
     }
 
+    // ----------------------
+    // Escolha de itens (equipamento inicial)
+    // ----------------------
     funcao caminho_itens() {
-        cadeia itens[3] = {"Salão Lunar", "Caverna dos ossos", "Torre Celestial"}
-
-        escreva("\nEscolha um local para se equipar e realizar a missao com facilidade:\n")
-        para (inteiro i = 0; i < 3; i++) {
-            escreva("[", i, "] ", itens[i], "\n")  
-        }
-
+        escreva("\nEscolha um local para se equipar:\n")
+        escreva("[0] Salão Lunar — receba a Armadura (reduz dano em batalha)\n")
+        escreva("[1] Caverna dos Ossos — pegue o Bastão (+15 dano quando usado)\n")
+        escreva("[2] Torre Celestial — pegue o Chakram (ataque único de 50 de dano)\n")
         leia(escolhaNumerica)
 
         se (escolhaNumerica == 0) {
             temArmadura = verdadeiro
-            escreverLento("Você recebeu a Armadura Lunar (proteje 20 de dano do ataque inimigo).\n")
+            escreverLento("Você veste a Armadura Lunar — um brilho prateado envolve seu corpo.\n")
             
         } senao se (escolhaNumerica == 1) {
             temBastao = verdadeiro
-            escreverLento("Você recebeu o Bastão Lunar (+15 de dano).\n")
+            escreverLento("Você empunha o Bastão de Khonshu — seus golpes ficam mais contundentes.\n")
             
         } senao se (escolhaNumerica == 2) {
             temChakram = verdadeiro
-            escreverLento("Você recebeu o Chakram Lunar. (so pode usar uma unica vez, da 50 de dano\n")
-            
+            escreverLento("Você adquire o Chakram lunar — afiado e fatal, mas com uso único.\n")
             
         } senao {
-            escreverLento("Escolha inválida. Você não encontra nenhum item. Tente outro: \n")
-            leia(escolhaNumerica)
+            escreverLento("Nada encontrado. Você segue desarmado.\n")
         }
     }
 
-    funcao escreverLento(cadeia palavra) {
-        inteiro quant = t.numero_caracteres(palavra)
-        para (inteiro i = 0; i < quant; i++) {
-            escreva(t.obter_caracter(palavra, i))
-            u.aguarde(10)
-        }
-    }
-
+    // ----------------------
+    // BATALHA: Harrow (mini-chefe)
+    // ----------------------
     funcao batalhaHarrow() {
-        inteiro vida_Harrow = 70
-        inteiro danoHarrow = u.sorteia(5, 20)
+        inteiro vida_Harrow = 65
+
+        
+        escreva("\nENCONTRO: ARTHUR HARROW\n")
+        escreverLento("Harrow deseja purificar por seu ‘cálculo moral’. Você não pode permitir.\n")
 
         enquanto (vida_Harrow > 0 e vidaJogador > 0) {
         	
-            escreva("\nEscolha: [A] atacar | [D] defender")
-            se (ajudaTawret) { 
-                escreva(" | [T] pedir ajuda a Taweret")
-            }
-            senao se(ajudaLayla){
-            	escreva(" | [L] pedir ajuda a Layla")
-            }
+            escreva("\nSua vida: ", vidaJogador, " | Vida de Harrow: ", vida_Harrow, "\n")
+            escreva("Escolha: [A] atacar | [D] defender")
+            se (ajudaTawret) { escreva(" | [T] pedir ajuda a Taweret") }
+            se (ajudaLayla) { escreva(" | [L] pedir ajuda a Layla") }
             escreva("\n")
-
-            cadeia escolher
-            leia(escolher)
             
+            leia(escolher)
+
+            // Ataque do jogador
             se (escolher == "A" ou escolher == "a") {
                 danoJogador = u.sorteia(10, 20)
                 
                 se (temBastao) {
-                    danoJogador += 15
-                    escreverLento("Você usa o Bastão Lunar.\n")
+                    danoJogador = danoJogador + 15
+                    escreverLento("Você golpeia com o Bastão Lunar.\n")
                 }
-                vida_Harrow -= danoJogador
-
-                se (temArmadura) {
-                    danoHarrow -= 20
-                    
-                    se (danoHarrow < 0) {
-                        danoHarrow = 0
-                    }
-                }
-                vidaJogador -= danoHarrow
-                escreva("Você recebe ", danoHarrow, " de dano. E Harrow recebe ", danoJogador, " de dano\n")
+                
+                vida_Harrow = vida_Harrow - danoJogador
+                escreverLento("Você causa " + danoJogador + " de dano em Harrow.\n")
 
                 se (temChakram e chakramUsado == falso) {
-                    escreverLento("Usar Chakram agora? (S/N)\n")
+                    escreverLento("Deseja lançar o Chakram agora? (S/N)\n")
                     leia(simNao)
                     
                     se (simNao == "S" ou simNao == "s") {
-                        vida_Harrow -= 50
+                        vida_Harrow = vida_Harrow - 50
                         chakramUsado = verdadeiro
-                        escreverLento("Chakram lançado! -30 de vida do inimigo.\n")
+                        escreverLento("Chakram lançado! -50 de vida.\n")
                     }
-                }
-            } senao se (escolher == "D" ou escolher == "d") {
-                danoHarrow = u.sorteia(5, 10)
-                
-                se (temArmadura) {
-                    danoHarrow -= 5
-                    
-                    se (danoHarrow < 0) {
-                        danoHarrow = 0
-                    }
-                }
-                vidaJogador -= danoHarrow
-                escreva("Você se defende e recebe ", danoHarrow, " de dano. E Harrow recebe ", danoJogador, " de dano\n")
-            } senao se (escolher == "T" e ajudaTawret) {
 
-			 
-                se(usosTawreet > 0){
-                	usosTawreet = usosTawreet - 1
-                	
-                	 inteiro sorte = u.sorteia(1, 2)
-                se (sorte == 1) {
-                    vidaJogador += 20
-                    se (vidaJogador > 300) {
-                        vidaJogador = 300
-                    }
-                    escreverLento("Taweret cura você! +20 vida.\n")
-                } senao {
-                    escreverLento("Taweret bloqueia o ataque inimigo.\n")
                 }
-               
-            }senao{
-            	escreva("Tawreet esta cansada, portanto nao pode mais te ajudar")
-
             }
-         
-         }
-      
-            se(escolher == "L" ou escolher == "l" e ajudaLayla){
-            	
-                se(usosLayla > 0){
-                	usosLayla = usosLayla - 1
-                	
-                	vida_Harrow = vida_Harrow - u.sorteia(10, 20)
-            		vidaJogador = vidaJogador - u.sorteia(3, 5)
-            		
-                	escreverLento("Layla aparece e golpeia Harrow!")
-                	
-                }senao{
-                	
-                	escreva("Layla esta cansada, portanto nao pode mais te ajudar")
+            senao se (escolher == "D" ou escolher == "d") {
+                escreverLento("Você se posiciona para defender; redução de dano neste turno.\n")
+            }
+            senao se (escolher == "T" e ajudaTawret) {
+                se (usosTawreet > 0) {
+                    usosTawreet = usosTawreet - 1
+                    inteiro sorte = u.sorteia(1, 2)
+                    
+                    se (sorte == 1) {
+                    	
+                        vidaJogador = vidaJogador + 25
+                        
+                        se (vidaJogador > 300) { vidaJogador = 300 
+                        }
+                        
+                        escreverLento("Taweret cura você! +25 de vida.\n")
+                        
+                    } senao {
+                        escreverLento("Taweret bloqueia o próximo ataque de Harrow.\n")
+                    }
+                    
+                } senao {
+                    escreverLento("Taweret está exausta e não pode ajudar.\n")
                 }
-	
+            }
+            senao se (escolher == "L" e ajudaLayla) {
             	
-            	
-            	
+                se (usosLayla > 0) {
+                    usosLayla = usosLayla - 1
+                    inteiro danoLayla = u.sorteia(12, 22)
+                    vida_Harrow = vida_Harrow - danoLayla
+                    vidaJogador = vidaJogador - u.sorteia(3, 6) // custo do esforço
+                    escreverLento("Layla surge e acerta Harrow! (-" + danoLayla + " vida inimiga)\n")
+                    
+                } senao {
+                	
+                    escreverLento("Layla está exausta.\n")
+                }
+            }
+
+            // Ataque de Harrow (se ainda vivo)
+            se (vida_Harrow > 0) {
+                inteiro danoHarrow = u.sorteia(8, 18)
+                
+                // se jogador defendeu
+                se (escolher == "D" ou escolher == "d") {
+                    danoHarrow = 0
+                }
+                // armadura reduz
+                se (temArmadura) {
+                    danoHarrow = danoHarrow - 15
+                }
+                se (danoHarrow < 0) { 
+                	danoHarrow = 0 
+                	}
+                	
+                vidaJogador -= danoHarrow
+                escreva("Harrow contra-ataca e causa ", danoHarrow, " de dano.\n")
             }
 
             se (vida_Harrow < 0) { 
             	vida_Harrow = 0 
             	}
-            	
             se (vidaJogador < 0) { 
             	vidaJogador = 0 
             	}
 
-            escreva("Sua vida: ", vidaJogador, " | Vida do inimigo: ", vida_Harrow, "\n")
-            u.aguarde(800)
+            escreva("Status — Sua vida: ", vidaJogador, " | Harrow: ", vida_Harrow, "\n")
+            u.aguarde(700)
         }
 
         se (vida_Harrow <= 0) {
-          escreverLento("Harrow cai.\n\n")
-escreva("      .__  __               .__        \n")
-escreva("___  _|__|/  |_  ___________|__|____   \n")
-escreva("\\  \\/ /  \\   __\\/  _ \\_  __ \\  \\__  \\  \n")
-escreva(" \\   /|  ||  | (  <_> )  | \\/  |/ __ \\_\n")
-escreva("  \\_/ |__||__|  \\____/|__|  |__(____  /\n")
-escreva("                                    \\/  \n")
-		
+            escreverLento("Harrow cai. O caminho ao templo agora está aberto.\n")
+    escreva(" ▄█    █▄   ▄█      ███      ▄██████▄     ▄████████  ▄█     ▄████████ \n")
+    escreva("███    ███ ███  ▀█████████▄ ███    ███   ███    ███ ███    ███    ███ \n")
+    escreva("███    ███ ███▌    ▀███▀▀██ ███    ███   ███    ███ ███▌   ███    ███ \n")
+    escreva("███    ███ ███▌     ███   ▀ ███    ███  ▄███▄▄▄▄██▀ ███▌   ███    ███ \n")
+    escreva("███    ███ ███▌     ███     ███    ███ ▀▀███▀▀▀▀▀   ███▌ ▀███████████ \n")
+    escreva("███    ███ ███      ███     ███    ███ ▀███████████ ███    ███    ███ \n")
+    escreva("███    ███ ███      ███     ███    ███   ███    ███ ███    ███    ███ \n")
+    escreva(" ▀██████▀  █▀      ▄████▀    ▀██████▀    ███    ███ █▀     ███    █▀  \n")
+    escreva("                                         ███    ███                    \n")
+            
         } senao {
-            escreva(".___                          __          \n")
-		  escreva("  __| _/__________________  _____/  |______   \n")
-		  escreva(" / __ |/ __ \\_  __ \\_  __ \\/  _ \\   __\\__  \\  \n")
-		  escreva("/ /_/ \\  ___/|  | \\/|  | \\(  <_> )  |  / __ \\_\n")
-		  escreva("\\____ |\\___  >__|   |__|   \\____/|__| (____  /\n")
-		  escreva("     \\/    \\/                              \\/  \n")
-            escreverLento("Sua jornada como Cavaleiro da Lua chegou ao fim.")
+        	
+    escreverLento("Você foi derrotado por Harrow...\n")
+    escreva("████████▄     ▄████████    ▄████████    ▄████████  ▄██████▄      ███        ▄████████ \n")
+    escreva("███   ▀███   ███    ███   ███    ███   ███    ███ ███    ███ ▀█████████▄   ███    ███ \n")
+    escreva("███    ███   ███    █▀    ███    ███   ███    ███ ███    ███    ▀███▀▀██   ███    ███ \n")
+    escreva("███    ███  ▄███▄▄▄      ▄███▄▄▄▄██▀  ▄███▄▄▄▄██▀ ███    ███     ███   ▀   ███    ███ \n")
+    escreva("███    ███ ▀▀███▀▀▀     ▀▀███▀▀▀▀▀   ▀▀███▀▀▀▀▀   ███    ███     ███     ▀███████████ \n")
+    escreva("███    ███   ███    █▄  ▀███████████ ▀███████████ ███    ███     ███       ███    ███ \n")
+    escreva("███   ▄███   ███    ███   ███    ███   ███    ███ ███    ███     ███       ███    ███ \n")
+    escreva("████████▀    ██████████   ███    ███   ███    ███  ▀██████▀     ▄████▀     ███    █▀  \n")
+    escreva("                          ███    ███   ███    ███                                           \n")
+    escreva("\n")
         }
     }
 
+    // ----------------------
+    // Missão da balança (Osíris) — agora contabiliza pontosBalanca
+    // ----------------------
     funcao missao_balanca() {
-        escreverLento("\nVocê é levado à balança de Osíris...\n")
-        escreva("                                                                                                   \n")
-    escreva("                                             */ , . , /*                                            \n")
-    escreva("                                         *,,,(#/,...,/((,,,                                         \n")
-    escreva("                                       .,,,(*((((###(((/,(,,,                                       \n")
-    escreva("                                      # .*,,/           *,,(  (                                     \n")
-    escreva("                                        ,,.               .,*                                       \n")
-    escreva("                                        ..(               #..                                       \n")
-    escreva("                                      ,,* ,               , (,*                                     \n")
-    escreva("                                       *,/ *             ,.(,*                                      \n")
-    escreva("                                         *,*,.         .,*,,                                        \n")
-    escreva("                              ( .//(((/*.* %,,,,*   ,*,,,( / */(((/*  #                             \n")
-    escreva("                     ..*,. /((,,((((/((((( /(.(,,,(,,,(.#/ (((((/((((,*((* .**.                     \n")
-    escreva("                    ,,,,,*,/.....,,#*#,,..... (///////(......,,//*,*....,/,*,,,,,                   \n")
-    escreva("                            (*(....,.,....(    ,(*#/(,   .#....,.*....(,#                           \n")
-    escreva("                            ,.,/(#(,*.//       ,,/#(,*       (*.,,#%(*,                              \n")
-    escreva("              / / ,       ,,(.,,,.             ,,,(,,/            ,.,,.,(.,       , / #             \n")
-    escreva("             ,  **    ,*(  %%%%/                /,#,/                (%%%&  (,,   .**  ,            \n")
-    escreva("              (,(.**#                           /*///.                          #*/.(,#             \n")
-    escreva("                (                              .,,,..                             . #               \n")
-    escreva("                ,(                              /////.                            ,#,               \n")
-    escreva("               . (                             .*,...*                             # (              \n")
-    escreva("              ( .(                             ,//////                             *  (             \n")
-    escreva("             #  (*  %                          (*...,#                          /   #  (            \n")
-    escreva("            (   .    .                         (/**///                         ,    .   .           \n")
-    escreva("           ,    (     (                        //.../.                        /     (               \n")
-    escreva("                                               ,(*//(                        *      .               \n")
-    escreva("                                                /...(                                               \n")
-    escreva("                                                (///#                                               \n")
-    escreva("               #         #                      (...#                      ,      ,  .              \n")
-    escreva("               ,  ,       .                     #///#                     (       (  (              \n")
-    escreva("               (  (        (                    #.,.#                    *        (  ,        .     \n")
-    escreva("    /(         . /,         .                   #//*(                   /         .. #         #,   \n")
-    escreva("   ...,.*%/,,,((,,,,,,,,(%.,( ..                %*..#                 . ,.,%/,,,,,,,,(%,,,/%, ,...  \n")
-    escreva("      (//(##(/******/((##(//*                   %,#,/                   *//(##((/***,**/(##(///     \n")
-    escreva("                                                (,*,,                                               \n")
-    escreva("                                                .,/,                                               \n")
-    escreva("                                                 ,#,                                               \n")
-    escreva("                                                .,#*,                                               \n")
-    escreva("                                               ...*.,,                                              \n")
-    escreva("                                                . ...                                               \n")
-    
-        u.aguarde(50)
+        
+        escreverLento("\nVocê é conduzido até as areias brilhantes e a balança de Osíris.\n")
+        escreverLento("Dois corações, duas decisões. Responda com sinceridade.\n")
+        u.aguarde(500)
 
         inteiro pontos = 0
         cadeia resposta
 
-        escreverLento("\nPergunta 1: Luta por si ou pelos outros? (S/O)\n")
+        escreverLento("\nPergunta 1: Você luta por si ou pelos outros? (S/O)\n")
         leia(resposta)
         se (resposta == "O" ou resposta == "o") {
-            pontos++
-            escreverLento("A balança se move a seu favor.\n")
+            pontos = pontos + 1
+            escreverLento("O som de conchas se harmoniza.\n")
         } senao {
-            escreverLento("A balança se inclina contra você.\n")
+            escreverLento("A balança cintila com dúvida.\n")
         }
 
-        escreverLento("\nPergunta 2: Aceita todas as partes de você? (S/N)\n")
+        escreverLento("\nPergunta 2: Você aceita todas as partes de você? (S/N)\n")
         leia(resposta)
         se (resposta == "S" ou resposta == "s") {
-            pontos++
-            escreverLento("As conchas brilham em harmonia.\n")
+            pontos = pontos + 1
+            escreverLento("As conchas brilham em equilíbrio.\n")
         } senao {
-            escreverLento("A concha esquerda afunda, revelando um peso oculto.\n")
+            escreverLento("Uma concha afunda, revelando um peso oculto.\n")
         }
+
+        // gravar para final secreto
+        pontosBalanca = pontos
 
         se (pontos >= 2) {
-            vidaJogador += 30
-            se (vidaJogador > 300) { vidaJogador = 300 }
-            escreverLento("A balança se equilibra. (+30 vida)\n")
+            vidaJogador = vidaJogador + 30
+            se (vidaJogador > 300) { 
+            	vidaJogador = 300 
+            	}
+            escreverLento("A balança se equilibra. Você recupera vigor. (+30 vida)\n")
         } senao {
-            vidaJogador -= 20
+            vidaJogador = vidaJogador - 20
             escreverLento("A balança se inclina contra você. (-20 vida)\n")
         }
-
-        u.aguarde(100)
-        escreverLento("\nA luz da balança se dissipa, revelando três portas adiante...\n")
+        u.aguarde(600)
     }
 
+    // ----------------------
+    // Caminho das Memórias (registra coragem)
+    // ----------------------
     funcao caminho_memorias() {
-        cadeia portas[3] = {"Casa simples — ecos da infancia", "Templo em ruínas — sangue derramado nas areias do Egito.", "Corredor sombrio — sombras internas."}
+        
+        escreverLento("\nTrês portas surgem — cada uma guarda uma lembrança. Escolha com coragem.\n")
+        u.aguarde(400)
+
+        cadeia portas[3] = {"Casa simples — ecos da infância", "Templo em ruínas — memória de coragem", "Corredor sombrio — segredos "}
         inteiro efeitosVida[3] = {-10, +40, -15}
-        inteiro efeitosDano[3] = {5, 0, 10}
-        
-        escreva("\nEscolha uma porta:\n")
+        inteiro efeitosDano[3] = {0, 0, 10}
+
         para (inteiro i = 0; i < 3; i++) {
-            escreva("[", i, "] ", portas[i], "\n")  
+            escreva("[", i, "] ", portas[i], "\n")
         }
-        
-        leia(escolhaNumerica) 
-        
+
+        escreva("Escolha uma porta (0, 1 ou 2):\n")
+        leia(escolhaNumerica)
+
         se (escolhaNumerica >= 0 e escolhaNumerica < 3) {
-            vidaJogador += efeitosVida[escolhaNumerica]
-            danoJogador += efeitosDano[escolhaNumerica]
+        	
+            vidaJogador = vidaJogador + efeitosVida[escolhaNumerica]
             
-            escreverLento("Você atravessa a porta escolhida. Vida atual: " + vidaJogador + ", Dano permanente: " + danoJogador + "\n")
+            danoJogador = danoJogador + efeitosDano[escolhaNumerica]
+
+            se (escolhaNumerica == 1) {
+            	
+                memoriaCoragem = memoriaCoragem + 1
+                
+                escreverLento("Você enfrenta o que foi e se fortalece. Vida atual: " + vidaJogador + "\n")
+                
+            } senao {
+                escreverLento("Você atravessa a lembrança. Vida atual: " + vidaJogador + "\n")
+            }
+            
         } senao {
-            escreverLento("Escolha inválida. Você fica no limbo, sua mente está em guerra. (-10 vida)\n")
-            vidaJogador -= 10
+        	
+            escreverLento("Escolha inválida. Sua mente vacila e você perde vitalidade. (-10 vida)\n")
+            vidaJogador = vidaJogador - 10
         }
+        u.aguarde(600)
     }
 
-   funcao batalhaFinal() {
-    escreverLento("Ao chegar no templo de Ammit ela diz: \n\n")
-    escreverLento("- O julgamento será feito... e você será devorado.\n\n")
-    escreverLento("Então o Cavaleiro da Lua diz: - Eu não vou deixar você destruir tudo que eu amo.\n\n")
-    escreverLento("- O passado não pode ser apagado, Cavaleiro da Lua. - diz Ammit.\n\n")
-    escreverLento("Ammit ergue o cajado e lança uma rajada mágica no Cavaleiro da Lua.\n\n")
+    // ----------------------
+    // Batalha final: Ammit
+    // ----------------------
+    funcao batalhaFinal() {
+        inteiro vidaAmmit = 400
+        inteiro danoAmmit = 30   // dano médio por ataque (positivo)
+        logico laylaCurou = falso
 
-    inteiro vidaAmmit = 400
-    inteiro danoAmmit = u.sorteia(20, 30)
+        
+        escreva("AMMIT: A DEUSA DEVORADORA\n")
+        escreverLento("Do altar, um rugido parte das profundezas: Ammit desperta para julgar.\n")
+        u.aguarde(700)
 
-    vidaJogador -= danoAmmit
-    escreva("Sua vida: ", vidaJogador, " | Dano do inimigo: ", danoAmmit, "\n")
-
-    escreverLento("O Cavaleiro da Lua revida e dá um golpe em Ammit.\n\n")
-
-    vidaAmmit -= danoJogador
-    escreva("Dano do Jogador: ", danoJogador, " | Vida do inimigo: ", vidaAmmit, "\n")
-
-    escreverLento("[Eles colidem no ar, trocando golpes poderosos]\n\n")
-
-    enquanto (vidaJogador > 0 e vidaAmmit > 0) {
-        escreva("\nEscolha: [A] atacar | [D] defender")
-        se (ajudaTawret) {
-            escreva(" | [T] pedir ajuda a Taweret")
+        // Efeitos por companhia/Khonshu
+        se (ajudadoPorKhonshu) {
+        	
+            // Khonshu dá um bônus, mas também uma dívida: aumento de dano do jogador
+            
+            danoJogador = danoJogador + 5
+            
+            escreverLento("A bênção de Khonshu aumenta seu poder — mas seu destino se entrelaça com o do deus.\n")
         }
-        se (ajudaLayla) {
-            escreva(" | [L] pedir ajuda a Layla")
-        }
-        escreva("\n")
 
-        cadeia escolher
-        leia(escolher)
+        enquanto (vidaJogador > 0 e vidaAmmit > 0) {
+        	
+            escreva("\nSua vida: ", vidaJogador, " | Vida de Ammit: ", vidaAmmit, "\n")
 
-        se (escolher == "A" ou escolher == "a") {
-            danoJogador = u.sorteia(10, 20)
-            se (temBastao) {
-                danoJogador += 15
-                escreverLento("Você usa o Bastão Lunar.\n")
+            escreva("Escolha: [A] atacar | [D] defender")
+            
+            se (ajudaTawret) { 
+            	
+            	escreva(" | [T] pedir ajuda a Taweret") 
+            	
             }
+            
+            se (ajudaLayla) { 
+            	
+            	escreva(" | [L] pedir ajuda a Layla") 
+            	}
+            se (temChakram e nao chakramUsado) { 
+            	
+            	escreva(" | [C] usar Chakram (único)\n") 
+            	
+            	} senao {
+            		
+            	escreva("\n") 
+            	
+            	}
+            		
+            leia(escolher)
 
-            vidaAmmit -= danoJogador
-
-            danoAmmit = u.sorteia(20, 30)
-            se (temArmadura) {
-                danoAmmit -= 20
-                se (danoAmmit < 0) {
-                    danoAmmit = 0
+            // Ação do jogador
+            se (escolher == "A" ou escolher == "a") {
+            	
+                danoJogador = u.sorteia(10, 25)
+                
+                se (temBastao) {
+                	
+                    danoJogador = danoJogador + 15
+                    escreverLento("Você ataca com o Bastão, canalizando a fúria lunar.\n")
                 }
+                
+                vidaAmmit = vidaAmmit - danoJogador
+                escreva("Você causa ", danoJogador, " de dano.\n")
             }
-
-            vidaJogador -= danoAmmit
-            escreva("Você causa ", danoJogador, " de dano e recebe ", danoAmmit, " de dano.\n")
-            escreva("Sua vida: ", vidaJogador, " | Vida do inimigo: ", vidaAmmit, "\n")
-
-            se (temChakram e chakramUsado == falso) {
-                escreverLento("Usar Chakram agora? (S/N)\n")
-                leia(simNao)
-                se (simNao == "S" ou simNao == "s") {
-                    vidaAmmit -= 50
-                    chakramUsado = verdadeiro
-                    escreverLento("Chakram lançado! -50 de vida do inimigo.\n")
-                }
+            senao se (escolher == "D" ou escolher == "d") {
+                escreverLento("Você se prepara para absorver o golpe — defesa aumentada neste turno.\n")
             }
-
-        } senao se (escolher == "D" ou escolher == "d") {
-            danoAmmit = u.sorteia(10, 20)
-            se (temArmadura) {
-                danoAmmit -= 10
-                se (danoAmmit < 0) {
-                    danoAmmit = 0
-                }
-            }
-            vidaJogador -= danoAmmit
-            escreverLento("Você se defende e reduz o dano recebido.\n")
-            escreva("Dano recebido: ", danoAmmit, "\n")
-
-        } senao se (escolher == "T" e ajudaTawret) {
-            se (usosTawreet > 0) {
-                usosTawreet--
-                inteiro sorte = u.sorteia(1, 2)
-                se (sorte == 1) {
-                    vidaJogador += 20
-                    se (vidaJogador > 300) { vidaJogador = 300 }
-                    escreverLento("Taweret cura você! (+20 vida)\n")
+            
+            senao se (escolher == "T" e ajudaTawret) {
+                se (usosTawreet > 0) {
+                    usosTawreet = usosTawreet - 1
+                    inteiro sorte = u.sorteia(1, 2)
+                    
+                    se (sorte == 1) {
+                        vidaJogador = vidaJogador + 35
+                        
+                        se (vidaJogador > 300) { vidaJogador = 300 }
+                        escreverLento("Taweret derrama bênçãos: +35 vida.\n")
+                        
+                    } senao {
+                    	
+                        escreverLento("Taweret convoca uma barreira e bloqueia parte do dano.\n")
+                    }
+                    
                 } senao {
-                    escreverLento("Taweret bloqueia o ataque de Ammit!\n")
+                	
+                    escreverLento("Taweret está exausta.\n")
                 }
-            } senao {
-                escreverLento("Taweret está exausta e não pode mais ajudar.\n")
+            }
+            senao se ((escolher == "L" ou escolher == "l") e ajudaLayla) {
+            	
+                se (usosLayla > 0) {
+                    usosLayla = usosLayla - 1
+                    inteiro danoLayla = u.sorteia(20, 35)
+                    vidaAmmit = vidaAmmit - danoLayla
+                    escreverLento("Layla ataca ao seu lado! (-" + danoLayla + " vida em Ammit)\n")
+                } senao {
+                    escreverLento("Layla não tem forças suficientes.\n")
+                }
+            }
+            senao se ((escolher == "C" ou escolher == "c") e temChakram e nao chakramUsado) {
+                vidaAmmit = vidaAmmit - 50
+                chakramUsado = verdadeiro
+                escreverLento("O Chakram voa em arco fatal — -50 na vida de Ammit!\n")
             }
 
-        } senao se (escolher == "L" e ajudaLayla) {
-            se (usosLayla > 0) {
-                usosLayla--
-                inteiro danoLayla = u.sorteia(15, 25)
-                vidaAmmit -= danoLayla
-                escreverLento("Layla surge como o Escaravelho Escarlate e ataca Ammit! (-" + danoLayla + " vida)\n")
-            } senao {
-                escreverLento("Layla está exausta e não pode mais ajudar.\n")
+            // Ammit ataca (se ainda viva)
+            se (vidaAmmit > 0) {
+                inteiro danoRecebido = u.sorteia(20, danoAmmit) // danoAmmit = 30 base
+                
+                // se o jogador escolheu defender, reduz
+                se (escolher == "D" ou escolher == "d") {
+                    danoRecebido = danoRecebido / 2
+                }
+                // Armadura reduz
+                se (temArmadura) {
+                    danoRecebido = danoRecebido - 15
+                }
+                se (danoRecebido < 0) { danoRecebido = 0 }
+                vidaJogador = vidaJogador - danoRecebido
+                escreva("Ammit investe e causa ", danoRecebido, " de dano.\n")
+
+                // Cura da Layla caso o jogador esteja muito machucado
+                se (ajudaLayla e laylaCurou == falso e vidaJogador <= 80) {
+                    laylaCurou = verdadeiro
+                    inteiro curaLayla = 50
+                    vidaJogador = vidaJogador + curaLayla
+                    escreva("Layla intervém e cura você! (+", curaLayla, " vida)\n")
+                }
             }
+
+            se (vidaAmmit < 0) { 
+            	vidaAmmit = 0 
+
+	escreva(" ▄█    █▄   ▄█      ███      ▄██████▄     ▄████████  ▄█     ▄████████ \n")
+    escreva("███    ███ ███  ▀█████████▄ ███    ███   ███    ███ ███    ███    ███ \n")
+    escreva("███    ███ ███▌    ▀███▀▀██ ███    ███   ███    ███ ███▌   ███    ███ \n")
+    escreva("███    ███ ███▌     ███   ▀ ███    ███  ▄███▄▄▄▄██▀ ███▌   ███    ███ \n")
+    escreva("███    ███ ███▌     ███     ███    ███ ▀▀███▀▀▀▀▀   ███▌ ▀███████████ \n")
+    escreva("███    ███ ███      ███     ███    ███ ▀███████████ ███    ███    ███ \n")
+    escreva("███    ███ ███      ███     ███    ███   ███    ███ ███    ███    ███ \n")
+    escreva(" ▀██████▀  █▀      ▄████▀    ▀██████▀    ███    ███ █▀     ███    █▀  \n")
+    escreva("                                         ███    ███                    \n")
+            	
+            	}
+            se (vidaJogador < 0) { 
+            	vidaJogador = 0 
+
+    escreva("████████▄     ▄████████    ▄████████    ▄████████  ▄██████▄      ███        ▄████████ \n")
+    escreva("███   ▀███   ███    ███   ███    ███   ███    ███ ███    ███ ▀█████████▄   ███    ███ \n")
+    escreva("███    ███   ███    █▀    ███    ███   ███    ███ ███    ███    ▀███▀▀██   ███    ███ \n")
+    escreva("███    ███  ▄███▄▄▄      ▄███▄▄▄▄██▀  ▄███▄▄▄▄██▀ ███    ███     ███   ▀   ███    ███ \n")
+    escreva("███    ███ ▀▀███▀▀▀     ▀▀███▀▀▀▀▀   ▀▀███▀▀▀▀▀   ███    ███     ███     ▀███████████ \n")
+    escreva("███    ███   ███    █▄  ▀███████████ ▀███████████ ███    ███     ███       ███    ███ \n")
+    escreva("███   ▄███   ███    ███   ███    ███   ███    ███ ███    ███     ███       ███    ███ \n")
+    escreva("████████▀    ██████████   ███    ███   ███    ███  ▀██████▀     ▄████▀     ███    █▀  \n")
+    escreva("                          ███    ███   ███    ███                                           \n")
+            	}
+
+            escreva("Status — Sua vida: ", vidaJogador, " | Vida de Ammit: ", vidaAmmit, "\n")
+            u.aguarde(800)
         }
 
-        se (vidaAmmit < 0) { vidaAmmit = 0 }
-        se (vidaJogador < 0) { vidaJogador = 0 }
-
-        escreva("Sua vida: ", vidaJogador, " | Vida de Ammit: ", vidaAmmit, "\n")
+        // Resultado já será tratado na função finais()
     }
 
-    se (vidaJogador > 0) {
-        escreverLento("\nCom um golpe final, você sela Ammit no submundo!\n")
-        escreva("  __  __ _____  _____ _____         ____     _____ ____  _   _  _____ _     _    _ _____ _____          \n")
-        escreva(" |  \\/  |_   _|/ ____/ ____|  /\\   / __ \\   / ____/ __ \\| \\ | |/ ____| |   | |  | |_   _|  __ \\   /\\    \n")
-        escreva(" | \\  / | | | | (___| (___   /  \\ | |  | | | |   | |  | |  \\| | |    | |   | |  | | | | | |  | | /  \\   \n")
-        escreva(" | |\\/| | | |  \\___ \\\\___ \\ / /\\ \\| |  | | | |   | |  | | . ` | |    | |   | |  | | | | | |  | |/ /\\ \\  \n")
-        escreva(" | |  | |_| |_ ____) |___) / ____ \\ |__| | | |___| |__| | |\\  | |____| |___| |__| |_| |_| |__| / ____ \\ \n")
-        escreva(" |_|  |_|_____|_____/_____/_/    \\_\\____/   \\_____\\____/|_| \\_|\\_____|______\\____/|_____|_____/_/    \\_\\\n")
-    } senao {
-        escreverLento("\nVocê cai ao chão e Ammit ri enquanto consome sua alma...\n")
+    // ----------------------
+    // Finais variados e final secreto (elemento surpresa)
+    // ----------------------
+    funcao finais() {
+        
+        se (vidaJogador <= 0) {
+        	
+    escreva("████████▄     ▄████████    ▄████████    ▄████████  ▄██████▄      ███        ▄████████ \n")
+    escreva("███   ▀███   ███    ███   ███    ███   ███    ███ ███    ███ ▀█████████▄   ███    ███ \n")
+    escreva("███    ███   ███    █▀    ███    ███   ███    ███ ███    ███    ▀███▀▀██   ███    ███ \n")
+    escreva("███    ███  ▄███▄▄▄      ▄███▄▄▄▄██▀  ▄███▄▄▄▄██▀ ███    ███     ███   ▀   ███    ███ \n")
+    escreva("███    ███ ▀▀███▀▀▀     ▀▀███▀▀▀▀▀   ▀▀███▀▀▀▀▀   ███    ███     ███     ▀███████████ \n")
+    escreva("███    ███   ███    █▄  ▀███████████ ▀███████████ ███    ███     ███       ███    ███ \n")
+    escreva("███   ▄███   ███    ███   ███    ███   ███    ███ ███    ███     ███       ███    ███ \n")
+    escreva("████████▀    ██████████   ███    ███   ███    ███  ▀██████▀     ▄████▀     ███    █▀  \n")
+    escreva("                          ███    ███   ███    ███                                           \n")
+    escreva("\n")
+    
+    escreverLento("\n Sua jornada termina nas garras de Ammit. A balança pesa a sua alma.\n")
+    
+    escreva("\nFim trágico.\n")
+            
+        }
+
+        
+        escreverLento("\n A deusa é banida; as sombras recuam. Você sobreviveu ao julgamento.\n")
+        u.aguarde(600)
+
+        // Final se Taweret / Layla / sozinho / Khonshu
+        se (ajudaTawret) {
+        	
+            escreverLento("\nTaweret sorri: as águas curam o que foi ferido. Você retorna ao mundo dos vivos com compaixão restaurada.\n")
+            escreva("\nFinal: O Guardião Compassivo\n")
+            
+        } senao se (ajudaLayla) {
+        	
+            escreverLento("\nLayla segura sua mão nas ruínas do templo. Vocês caminham para proteger os inocentes.\n")
+            escreva("\nFinal: Parceiros da Aurora\n")
+            
+        } senao se (ajudadoPorKhonshu) {
+            escreverLento("\nKhonshu sussurra nas sombras. Seu poder aumentou, mas agora sua liberdade pertence ao deus.\n")
+            escreva("\nFinal: O Avatar Noturno (um preço foi pago)\n")
+            
+        } senao {
+        	
+            escreverLento("\nSozinho, você derrota Ammit — mas seu nome se perde entre as areias e memórias.\n")
+            escreva("\nFinal: O Cavaleiro Solitário\n")
+        }
+
+        // Final secreto (elemento surpresa):
+        
+        se ((pontosBalanca >= 2 e memoriaCoragem >= 1) ou (vidaJogador >= 250)) {
+            u.aguarde(700)
+            
+            escreverLento("\nUm brilho intenso envolve o templo... Khonshu ajoelha-se perante você.\n")
+            u.aguarde(700)
+            escreverLento("\"Você não é mais meu instrumento. Você é minha escolha.\"\n")
+            u.aguarde(600)
+
+            escreva("\n")
+            escreva("      .-''''-.\n")
+            escreva("     /  .--.  \\\n")
+            escreva("    /  /    \\  \\\n")
+            escreva("    |  |    |  |\n")
+            escreva("    |  |.-\"\"-.|\n")
+            escreva("   ///`.::::.`\\\\\\\n")
+            escreva("  ||| ::/  \\:: ;|\n")
+            escreva("  ||; ::\\__/:: ;|\n")
+            escreva("   \\\\\\'::::'///\n")
+            escreva("    `=':-..-'`\n")
+            escreverLento("\nFINAL SECRETO DESBLOQUEADO: Cavaleiro da Lua Supremo — você transcendeu o avatar e tornou-se lenda.\n")
+            escreva("\nSua apresentação termina com uma reverência final do próprio Khonshu.\n")
+        }
+
+        escreverLento("\nParabéns — sua jornada inspirará histórias nas esquinas da cidade.\n")
+
+        escreva("   ▄▄▄▄███▄▄▄▄    ▄█     ▄████████    ▄████████    ▄████████  ▄██████▄        ▄████████  ▄██████▄    ▄▄▄▄███▄▄▄▄      ▄███████▄  ▄█          ▄████████     ███        ▄████████ \n")
+	   escreva(" ▄██▀▀▀███▀▀▀██▄ ███    ███    ███   ███    ███   ███    ███ ███    ███      ███    ███ ███    ███ ▄██▀▀▀███▀▀▀██▄   ███    ███ ███         ███    ███ ▀█████████▄   ███    ███ \n")
+	   escreva(" ███   ███   ███ ███▌   ███    █▀    ███    █▀    ███    ███ ███    ███      ███    █▀  ███    ███ ███   ███   ███   ███    ███ ███         ███    █▀     ▀███▀▀██   ███    ███ \n")
+	   escreva(" ███   ███   ███ ███▌   ███          ███          ███    ███ ███    ███      ███        ███    ███ ███   ███   ███   ███    ███ ███        ▄███▄▄▄         ███   ▀   ███    ███ \n")
+	   escreva(" ███   ███   ███ ███▌ ▀███████████ ▀███████████ ▀███████████ ███    ███      ███        ███    ███ ███   ███   ███ ▀█████████▀  ███       ▀▀███▀▀▀         ███     ▀███████████ \n")
+	   escreva(" ███   ███   ███ ███           ███          ███   ███    ███ ███    ███      ███    █▄  ███    ███ ███   ███   ███   ███        ███         ███    █▄      ███       ███    ███ \n")
+	   escreva(" ███   ███   ███ ███     ▄█    ███    ▄█    ███   ███    ███ ███    ███      ███    ███ ███    ███ ███   ███   ███   ███        ███▌    ▄   ███    ███     ███       ███    ███ \n")
+	   escreva("  ▀█   ███   █▀  █▀    ▄████████▀   ▄████████▀    ███    █▀   ▀██████▀       ████████▀   ▀██████▀   ▀█   ███   █▀   ▄████▀      █████▄▄██   ██████████    ▄████▀     ███    █▀  \n")
+	   escreva("                                                                                                                                ▀")
     }
-}
 }
